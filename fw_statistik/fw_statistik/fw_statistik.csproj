@@ -1,0 +1,220 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C7D50F7D-485C-4842-92BF-1E92A9FCE093}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>fw_statistik</RootNamespace>
+    <AssemblyName>fw_statistik</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="GMap.NET.Core, Version=1.7.5.0, Culture=neutral, PublicKeyToken=b85b9027b614afef, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\greatmaps\GMap.NET.WindowsForms\bin\Release\GMap.NET.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="GMap.NET.WindowsForms, Version=1.7.5.0, Culture=neutral, PublicKeyToken=b85b9027b614afef, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\greatmaps\GMap.NET.WindowsForms\bin\Release\GMap.NET.WindowsForms.dll</HintPath>
+    </Reference>
+    <Reference Include="MapControl, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\MapControl.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="WindowsFormsIntegration" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Klassen\Alias.cs" />
+    <Compile Include="Klassen\Einsatz.cs" />
+    <Compile Include="Klassen\Fahrzeug.cs" />
+    <Compile Include="Forms\Alarmzeit Editor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Alarmzeit Editor.Designer.cs">
+      <DependentUpon>Alarmzeit Editor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Alias Editor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Alias Editor.Designer.cs">
+      <DependentUpon>Alias Editor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\charts.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\charts.Designer.cs">
+      <DependentUpon>charts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Klassen\Feuerwehrmann.cs" />
+    <Compile Include="Forms\Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Bericht.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Bericht.Designer.cs">
+      <DependentUpon>Bericht.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Import_file_msgbox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Import_file_msgbox.Designer.cs">
+      <DependentUpon>Import_file_msgbox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Manschaftsstatisik.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Manschaftsstatisik.Designer.cs">
+      <DependentUpon>Manschaftsstatisik.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Nachcheck.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Nachcheck.Designer.cs">
+      <DependentUpon>Nachcheck.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Import_stats_msgbox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Import_stats_msgbox.Designer.cs">
+      <DependentUpon>Import_stats_msgbox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Klassen\MyMarker.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Forms\Scrapper.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Scrapper.Designer.cs">
+      <DependentUpon>Scrapper.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Forms\Alarmzeit Editor.resx">
+      <DependentUpon>Alarmzeit Editor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Alias Editor.resx">
+      <DependentUpon>Alias Editor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\charts.resx">
+      <DependentUpon>charts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Bericht.resx">
+      <DependentUpon>Bericht.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Import_file_msgbox.resx">
+      <DependentUpon>Import_file_msgbox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Manschaftsstatisik.resx">
+      <DependentUpon>Manschaftsstatisik.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Nachcheck.resx">
+      <DependentUpon>Nachcheck.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Import_stats_msgbox.resx">
+      <DependentUpon>Import_stats_msgbox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="Forms\Scrapper.resx">
+      <DependentUpon>Scrapper.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ffl.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MapControl.dll" />
+    <Content Include="Fahrzeugnamen.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
