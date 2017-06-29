@@ -1,0 +1,3 @@
+[submodule "greatmaps"]
+	path = greatmaps
+	url = https://github.com/radioman/greatmaps.git
