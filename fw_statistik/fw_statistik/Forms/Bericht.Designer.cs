@@ -35,7 +35,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.listBox1 = new System.Windows.Forms.ListBox();
-            this.tb_ort = new System.Windows.Forms.TextBox();
+            this.tb_adresse = new System.Windows.Forms.TextBox();
             this.tb_stichwort = new System.Windows.Forms.TextBox();
             this.tb_mzeit = new System.Windows.Forms.TextBox();
             this.tb_meldung = new System.Windows.Forms.TextBox();
@@ -112,15 +112,15 @@
             this.listBox1.Size = new System.Drawing.Size(254, 277);
             this.listBox1.TabIndex = 11;
             // 
-            // tb_ort
+            // tb_adresse
             // 
-            this.tb_ort.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.tb_ort.Location = new System.Drawing.Point(110, 13);
-            this.tb_ort.Name = "tb_ort";
-            this.tb_ort.ReadOnly = true;
-            this.tb_ort.Size = new System.Drawing.Size(317, 13);
-            this.tb_ort.TabIndex = 12;
-            this.tb_ort.DoubleClick += new System.EventHandler(this.tb_ort_DoubleClick);
+            this.tb_adresse.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tb_adresse.Location = new System.Drawing.Point(110, 13);
+            this.tb_adresse.Name = "tb_adresse";
+            this.tb_adresse.ReadOnly = true;
+            this.tb_adresse.Size = new System.Drawing.Size(317, 13);
+            this.tb_adresse.TabIndex = 12;
+            this.tb_adresse.DoubleClick += new System.EventHandler(this.tb_ort_DoubleClick);
             // 
             // tb_stichwort
             // 
@@ -243,7 +243,7 @@
             this.Controls.Add(this.tb_meldung);
             this.Controls.Add(this.tb_mzeit);
             this.Controls.Add(this.tb_stichwort);
-            this.Controls.Add(this.tb_ort);
+            this.Controls.Add(this.tb_adresse);
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
@@ -270,7 +270,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ListBox listBox1;
-        private System.Windows.Forms.TextBox tb_ort;
+        private System.Windows.Forms.TextBox tb_adresse;
         private System.Windows.Forms.TextBox tb_stichwort;
         private System.Windows.Forms.TextBox tb_mzeit;
         private System.Windows.Forms.TextBox tb_meldung;

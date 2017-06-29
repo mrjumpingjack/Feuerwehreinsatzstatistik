@@ -13,33 +13,49 @@ namespace fw_statistik
         public Einsatz(string filepath,
             DateTime alarm_datum,
             DateTime end_datum,
-            string einsatzstichwort = "",
-            string ges_Adresse = "Stadthagen",
-            string ort = "Stadthagen",
-            string straße = "",
-            string hausnummer = "",
-            string art = "",
-            bool fehl = false,
-            string gruppen = "",
-            PointLatLng coor_ = new PointLatLng()
+            string einsatzstichwort,
+            Placemark adresse,
+            //string ges_Adresse = "Stadthagen",
+            //string ort = "Stadthagen",
+            //string straße = "",
+            //string hausnummer = "",
+            string art,
+            bool fehl,
+            string gruppen,
+            PointLatLng coor_
 
             )
         {
+            Adresse = adresse;
             Filepath = filepath;
             Coor = coor_;
             Alarm_datum = alarm_datum;
             End_datum = end_datum;
             Einsatzstichwort = einsatzstichwort;
-            Ort = ort;
+          //  Ort = ort;
             Art = art;
-            Straße = straße;
-            Hausnummer = hausnummer;
+          //  Straße = straße;
+           // Hausnummer = hausnummer;
             Fehl = fehl;
             Gruppen = gruppen;
-            Ges_addresse = ges_Adresse;
+           // .Adresse.LocalityName = ges_Adresse;
 
         }
 
+
+
+        private Placemark adresse;
+        public Placemark Adresse
+        {
+            get
+            {
+                return adresse;
+            }
+            set
+            {
+                adresse = value;
+            }
+        }
 
         private PointLatLng coor;
         public PointLatLng Coor
@@ -156,59 +172,59 @@ namespace fw_statistik
         }
 
 
-        private string straße;
-        public string Straße
-        {
-            get
-            {
-                return straße;
-            }
-            set
-            {
-                straße = value;
-            }
-        }
+        //private string straße;
+        //public string Straße
+        //{
+        //    get
+        //    {
+        //        return straße;
+        //    }
+        //    set
+        //    {
+        //        straße = value;
+        //    }
+        //}
 
-        private string hausnummer;
-        public string Hausnummer
-        {
-            get
-            {
-                return hausnummer;
-            }
-            set
-            {
-                hausnummer = value;
-            }
-        }
+        //private string hausnummer;
+        //public string Hausnummer
+        //{
+        //    get
+        //    {
+        //        return hausnummer;
+        //    }
+        //    set
+        //    {
+        //        hausnummer = value;
+        //    }
+        //}
 
 
 
-        private string ort;
-        public string Ort
-        {
-            get
-            {
-                return ort;
-            }
-            set
-            {
-                ort = value;
-            }
-        }
+        //private string ort;
+        //public string Ort
+        //{
+        //    get
+        //    {
+        //        return ort;
+        //    }
+        //    set
+        //    {
+        //        ort = value;
+        //    }
+        //}
 
-        private string ges_addresse;
-        public string Ges_addresse
-        {
-            get
-            {
-                return ges_addresse;
-            }
-            set
-            {
-                ges_addresse = value;
-            }
-        }
+        //private string .Adresse.LocalityName;
+        //public string .Adresse.LocalityName
+        //{
+        //    get
+        //    {
+        //        return .Adresse.LocalityName;
+        //    }
+        //    set
+        //    {
+        //        .Adresse.LocalityName = value;
+        //    }
+        //}
 
         private string art;
         public string Art

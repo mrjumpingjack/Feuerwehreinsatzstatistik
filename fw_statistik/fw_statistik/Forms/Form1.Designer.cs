@@ -34,13 +34,8 @@ namespace fw_statistik
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.xMFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.cSVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addEinsatzToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mergeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.showConsoleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exportMarkerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadStatsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fromLastImportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -50,7 +45,6 @@ namespace fw_statistik
             this.technischeHilfeleistungToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.übungenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.alleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.heatmapLANGSAMToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripComboBox1 = new System.Windows.Forms.ToolStripComboBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.button2 = new System.Windows.Forms.Button();
@@ -91,7 +85,7 @@ namespace fw_statistik
             this.toolStripComboBox1});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1069, 27);
+            this.menuStrip1.Size = new System.Drawing.Size(1084, 27);
             this.menuStrip1.TabIndex = 2;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -100,79 +94,39 @@ namespace fw_statistik
             this.openToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openToolStripMenuItem1,
             this.addEinsatzToolStripMenuItem,
-            this.mergeToolStripMenuItem,
             this.exportToolStripMenuItem,
-            this.showConsoleToolStripMenuItem,
-            this.exportMarkerToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(37, 23);
-            this.openToolStripMenuItem.Text = "File";
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(46, 23);
+            this.openToolStripMenuItem.Text = "Datei";
             // 
             // openToolStripMenuItem1
             // 
-            this.openToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.xMFToolStripMenuItem,
-            this.cSVToolStripMenuItem});
             this.openToolStripMenuItem1.Name = "openToolStripMenuItem1";
-            this.openToolStripMenuItem1.Size = new System.Drawing.Size(149, 22);
-            this.openToolStripMenuItem1.Text = "Open";
+            this.openToolStripMenuItem1.Size = new System.Drawing.Size(173, 22);
+            this.openToolStripMenuItem1.Text = "Öffnen";
             this.openToolStripMenuItem1.Click += new System.EventHandler(this.openToolStripMenuItem1_Click);
-            // 
-            // xMFToolStripMenuItem
-            // 
-            this.xMFToolStripMenuItem.Name = "xMFToolStripMenuItem";
-            this.xMFToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
-            this.xMFToolStripMenuItem.Text = "XMF";
-            this.xMFToolStripMenuItem.Click += new System.EventHandler(this.xMFToolStripMenuItem_Click);
-            // 
-            // cSVToolStripMenuItem
-            // 
-            this.cSVToolStripMenuItem.Name = "cSVToolStripMenuItem";
-            this.cSVToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
-            this.cSVToolStripMenuItem.Text = "CSV";
-            this.cSVToolStripMenuItem.Click += new System.EventHandler(this.cSVToolStripMenuItem_Click);
             // 
             // addEinsatzToolStripMenuItem
             // 
             this.addEinsatzToolStripMenuItem.Name = "addEinsatzToolStripMenuItem";
-            this.addEinsatzToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
-            this.addEinsatzToolStripMenuItem.Text = "Add Einsatz";
+            this.addEinsatzToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.addEinsatzToolStripMenuItem.Text = "Einsatz hinzufügen";
             this.addEinsatzToolStripMenuItem.Click += new System.EventHandler(this.addEinsatzToolStripMenuItem_Click);
-            // 
-            // mergeToolStripMenuItem
-            // 
-            this.mergeToolStripMenuItem.Name = "mergeToolStripMenuItem";
-            this.mergeToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
-            this.mergeToolStripMenuItem.Text = "Merge";
-            this.mergeToolStripMenuItem.Click += new System.EventHandler(this.mergeToolStripMenuItem_Click);
             // 
             // exportToolStripMenuItem
             // 
             this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
-            this.exportToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
-            this.exportToolStripMenuItem.Text = "Export";
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.exportToolStripMenuItem.Text = "Exportieren";
             this.exportToolStripMenuItem.Click += new System.EventHandler(this.exportToolStripMenuItem_Click);
-            // 
-            // showConsoleToolStripMenuItem
-            // 
-            this.showConsoleToolStripMenuItem.CheckOnClick = true;
-            this.showConsoleToolStripMenuItem.Name = "showConsoleToolStripMenuItem";
-            this.showConsoleToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
-            this.showConsoleToolStripMenuItem.Text = "Show Console";
-            // 
-            // exportMarkerToolStripMenuItem
-            // 
-            this.exportMarkerToolStripMenuItem.Name = "exportMarkerToolStripMenuItem";
-            this.exportMarkerToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
-            this.exportMarkerToolStripMenuItem.Text = "Export Marker";
-            this.exportMarkerToolStripMenuItem.Click += new System.EventHandler(this.exportMarkerToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
-            this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.exitToolStripMenuItem.Text = "Schließen";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // loadStatsToolStripMenuItem
             // 
@@ -180,8 +134,8 @@ namespace fw_statistik
             this.fromLastImportToolStripMenuItem,
             this.mannschaftToolStripMenuItem});
             this.loadStatsToolStripMenuItem.Name = "loadStatsToolStripMenuItem";
-            this.loadStatsToolStripMenuItem.Size = new System.Drawing.Size(72, 23);
-            this.loadStatsToolStripMenuItem.Text = "Load stats";
+            this.loadStatsToolStripMenuItem.Size = new System.Drawing.Size(105, 23);
+            this.loadStatsToolStripMenuItem.Text = "Statistiken laden";
             // 
             // fromLastImportToolStripMenuItem
             // 
@@ -203,8 +157,7 @@ namespace fw_statistik
             this.brandeinsätzeToolStripMenuItem,
             this.technischeHilfeleistungToolStripMenuItem,
             this.übungenToolStripMenuItem,
-            this.alleToolStripMenuItem,
-            this.heatmapLANGSAMToolStripMenuItem});
+            this.alleToolStripMenuItem});
             this.ansichtToolStripMenuItem.Name = "ansichtToolStripMenuItem";
             this.ansichtToolStripMenuItem.Size = new System.Drawing.Size(59, 23);
             this.ansichtToolStripMenuItem.Text = "Ansicht";
@@ -247,13 +200,6 @@ namespace fw_statistik
             this.alleToolStripMenuItem.Text = "Alle";
             this.alleToolStripMenuItem.Click += new System.EventHandler(this.layer_CheckedChanged);
             // 
-            // heatmapLANGSAMToolStripMenuItem
-            // 
-            this.heatmapLANGSAMToolStripMenuItem.Name = "heatmapLANGSAMToolStripMenuItem";
-            this.heatmapLANGSAMToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
-            this.heatmapLANGSAMToolStripMenuItem.Text = "Heatmap (LANGSAM)";
-            this.heatmapLANGSAMToolStripMenuItem.Click += new System.EventHandler(this.heatmapLANGSAMToolStripMenuItem_Click);
-            // 
             // toolStripComboBox1
             // 
             this.toolStripComboBox1.Name = "toolStripComboBox1";
@@ -268,7 +214,7 @@ namespace fw_statistik
             this.panel1.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.panel1.Controls.Add(this.button2);
             this.panel1.Controls.Add(this.button1);
-            this.panel1.Location = new System.Drawing.Point(968, 640);
+            this.panel1.Location = new System.Drawing.Point(983, 662);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(101, 78);
             this.panel1.TabIndex = 5;
@@ -319,7 +265,7 @@ namespace fw_statistik
             this.panel2.Controls.Add(this.label1);
             this.panel2.Controls.Add(this.label2);
             this.panel2.Controls.Add(this.l_einsätze_count);
-            this.panel2.Location = new System.Drawing.Point(956, 30);
+            this.panel2.Location = new System.Drawing.Point(971, 30);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(113, 159);
             this.panel2.TabIndex = 7;
@@ -438,9 +384,9 @@ namespace fw_statistik
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripProgressBar1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 718);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 740);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1069, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1084, 22);
             this.statusStrip1.TabIndex = 8;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -474,7 +420,7 @@ namespace fw_statistik
             this.MainMap.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
             this.MainMap.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
             this.MainMap.ShowTileGridLines = false;
-            this.MainMap.Size = new System.Drawing.Size(1069, 685);
+            this.MainMap.Size = new System.Drawing.Size(1084, 707);
             this.MainMap.TabIndex = 9;
             this.MainMap.Zoom = 0D;
             this.MainMap.OnMarkerClick += new GMap.NET.WindowsForms.MarkerClick(this.MainMap_OnMarkerClick_1);
@@ -484,16 +430,17 @@ namespace fw_statistik
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1069, 740);
+            this.ClientSize = new System.Drawing.Size(1084, 762);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.MainMap);
             this.MainMenuStrip = this.menuStrip1;
+            this.MinimumSize = new System.Drawing.Size(1100, 800);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Form1";
+            this.Text = "Einsatzstatistik";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.Shown += new System.EventHandler(this.Form1_Shown);
             this.menuStrip1.ResumeLayout(false);
@@ -520,7 +467,6 @@ namespace fw_statistik
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.ToolStripMenuItem mergeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ansichtToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem brandeinsätzeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem technischeHilfeleistungToolStripMenuItem;
@@ -538,18 +484,12 @@ namespace fw_statistik
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label l_fahrtweg;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.ToolStripMenuItem showConsoleToolStripMenuItem;
         private System.Windows.Forms.Label l_load_error;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
         private System.Windows.Forms.ToolStripComboBox toolStripComboBox1;
-        private System.Windows.Forms.ToolStripMenuItem exportMarkerToolStripMenuItem;
-       // private GMap.NET.WindowsForms.GMapControl MainMap;
-        private System.Windows.Forms.ToolStripMenuItem heatmapLANGSAMToolStripMenuItem;
         private GMap.NET.WindowsForms.GMapControl MainMap;
-        private System.Windows.Forms.ToolStripMenuItem xMFToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem cSVToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addEinsatzToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mannschaftToolStripMenuItem;

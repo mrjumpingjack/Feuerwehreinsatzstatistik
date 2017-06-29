@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GMap.NET;
+using GMap.NET.MapProviders;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -79,7 +81,7 @@ namespace fw_statistik
         {
             try
             {
-                tbOrt.Text = einsatz.Ges_addresse.Split(',')[1];
+                tbOrt.Text = einsatz.Adresse.LocalityName;
             }
             catch
             {
@@ -87,7 +89,7 @@ namespace fw_statistik
             }
             try
             {
-                tbStraße.Text = einsatz.Ges_addresse.Split(',')[0];
+                tbStraße.Text = einsatz.Adresse.ThoroughfareName;
             }
             catch
             {
@@ -95,7 +97,7 @@ namespace fw_statistik
             }
             try
             {
-                tbHausnummer.Text = tbStraße.Text.Split(' ')[1];
+                tbHausnummer.Text = einsatz.Adresse.HouseNo;
             }
             catch
             {
@@ -127,11 +129,66 @@ namespace fw_statistik
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            Einsatz.Ges_addresse = tbStraße.Text + " " + tbHausnummer.Text + "," + tbOrt.Text;
+            Einsatz.Adresse= getname_bypoint(getpoint_byname(tbStraße.Text + " " + tbHausnummer.Text + "," + tbOrt.Text));
             Einsatz.End_datum = DateTime.Parse(tb_einsatzende.Text);
             Einsatz.Alarm_datum = DateTime.Parse(tb_alarmzeit.Text);
             changed = true;
             Close();
         }
+
+
+
+        public PointLatLng getpoint_byname(String name)
+        {
+            PointLatLng point_ = new PointLatLng(0, 0);
+            try
+            {
+                GeoCoderStatusCode gcsc = new GeoCoderStatusCode();
+
+                PointLatLng? point = GMapProviders.GoogleMap.GetPoint(name, out gcsc);
+
+                if (gcsc == GeoCoderStatusCode.G_GEO_SUCCESS && point != null)
+                {
+                    point_.Lat = point.Value.Lat;
+                    point_.Lng = point.Value.Lng;
+                }
+                else
+                {
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return point_;
+        }
+
+
+        public Placemark getname_bypoint(PointLatLng point)
+        {
+            Placemark adress_ = new Placemark();
+            try
+            {
+                GeoCoderStatusCode gcsc = new GeoCoderStatusCode();
+
+                Placemark? name_p = GMapProviders.GoogleMap.GetPlacemark(point, out gcsc);
+
+                if (gcsc == GeoCoderStatusCode.G_GEO_SUCCESS && point != null)
+                {
+                    adress_ = name_p.Value;
+                }
+                else
+                {
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return adress_;
+        }
+
     }
 }

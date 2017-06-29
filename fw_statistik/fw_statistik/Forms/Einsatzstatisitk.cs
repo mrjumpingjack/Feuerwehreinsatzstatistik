@@ -30,24 +30,27 @@ namespace fw_statistik
 
 
 
-        public void charting1_gesammt(List<Einsatz> einsätze)
+        public void charting1_gesammt(List<Einsatz> einsätze, Chart chart)
         {
-            chart1.Series.Clear();
-            chart1.ChartAreas[0].AxisX.CustomLabels.Clear();
+            chart.Series.Clear();
+            chart.ChartAreas[0].AxisX.CustomLabels.Clear();
 
             Dictionary<string, int> Orte = new Dictionary<string, int>();
 
             foreach (Einsatz einsatz in einsätze)
             {
-                if (Orte.ContainsKey(einsatz.Ges_addresse.ToLower()))
+                if (einsatz.Adresse.Address != null)
                 {
-                    Orte[einsatz.Ges_addresse.ToLower()] = Orte[einsatz.Ges_addresse.ToLower()] + 1;
-                }
-                else
-                {
-                    Orte.Add(einsatz.Ges_addresse.ToLower(), 1);
-                }
+                    if (Orte.ContainsKey(einsatz.Adresse.LocalityName))
+                    {
+                        Orte[einsatz.Adresse.LocalityName] = Orte[einsatz.Adresse.LocalityName] + 1;
+                    }
+                    else
+                    {
+                        Orte.Add(einsatz.Adresse.LocalityName, 1);
+                    }
 
+                }
             }
             Orte = Orte.OrderBy(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
 
@@ -55,29 +58,29 @@ namespace fw_statistik
 
             int i = 0;
 
-            chart1.Series.Clear();
-            chart1.Series.Add("Orte");
-            chart1.Series[0].XValueType = ChartValueType.String;
-            chart1.ChartAreas[0].AxisX.LabelStyle.Angle = -90;
+            chart.Series.Clear();
+            chart.Series.Add("Orte");
+            chart.Series[0].XValueType = ChartValueType.String;
+            chart.ChartAreas[0].AxisX.LabelStyle.Angle = -90;
 
 
             foreach (KeyValuePair<string, int> d in Orte)
             {
 
-                chart1.Series[0].Points.AddXY(i, d.Value);
-                chart1.ChartAreas[0].AxisX.CustomLabels.Add(i, i + 0.5, d.Key.Substring(d.Key.IndexOf(',') + 1, d.Key.Length - (d.Key.IndexOf(',') + 1)));
+                chart.Series[0].Points.AddXY(i, d.Value);
+                chart.ChartAreas[0].AxisX.CustomLabels.Add(i, i + 0.5, d.Key.Substring(d.Key.IndexOf(',') + 1, d.Key.Length - (d.Key.IndexOf(',') + 1)));
                 i++;
             }
-            chart1.Invalidate();
-            chart1.Update();
+            chart.Invalidate();
+            chart.Update();
 
         }
 
-        public void charting1_nach_jahren_stichwort(List<Einsatz> einsätze)
+        public void charting1_nach_jahren_stichwort(List<Einsatz> einsätze, Chart chart)
         {
-            chart1.Series.Clear();
-            chart1.ChartAreas[0].AxisX.CustomLabels.Clear();
-            chart1.ChartAreas[0].AxisX.LabelStyle.Angle = 0;
+            chart.Series.Clear();
+            chart.ChartAreas[0].AxisX.CustomLabels.Clear();
+            chart.ChartAreas[0].AxisX.LabelStyle.Angle = 0;
 
             Dictionary<string, int> Ges_adressen = new Dictionary<string, int>();
             List<int> jahre = new List<int>();
@@ -159,13 +162,13 @@ namespace fw_statistik
                     }
 
                 }
-                chart1.Series.Add(series);
+                chart.Series.Add(series);
             }
 
 
 
-            chart1.Invalidate();
-            chart1.Update();
+            chart.Invalidate();
+            chart.Update();
 
 
 
@@ -178,11 +181,11 @@ namespace fw_statistik
 
 
 
-        public void charting_nach_Monaten_stichwort(List<Einsatz> einsätze)
+        public void charting_nach_Monaten_stichwort(List<Einsatz> einsätze, Chart chart)
         {
-            chart1.Series.Clear();
-            chart1.ChartAreas[0].AxisX.CustomLabels.Clear();
-            chart1.ChartAreas[0].AxisX.LabelStyle.Angle = 0;
+            chart.Series.Clear();
+            chart.ChartAreas[0].AxisX.CustomLabels.Clear();
+            chart.ChartAreas[0].AxisX.LabelStyle.Angle = 0;
 
             Dictionary<string, int> Ges_adressen = new Dictionary<string, int>();
             List<int> monate = new List<int>();
@@ -265,21 +268,22 @@ namespace fw_statistik
 
                 }
 
-                chart1.Series.Add(series);
+                chart.Series.Add(series);
             }
 
 
-            chart1.Invalidate();
-            chart1.Update();
+            chart.Invalidate();
+            chart.Update();
 
         }
 
 
-        public void charting_nach_tageszeit_stichwort(List<Einsatz> einsätze)
+        public void charting_nach_tageszeit_stichwort(List<Einsatz> einsätze, Chart chart)
         {
-            chart1.Series.Clear();
-            chart1.ChartAreas[0].AxisX.CustomLabels.Clear();
-            chart1.ChartAreas[0].AxisX.LabelStyle.Angle = 0;
+            
+            chart.Series.Clear();
+            chart.ChartAreas[0].AxisX.CustomLabels.Clear();
+            chart.ChartAreas[0].AxisX.LabelStyle.Angle = 0;
 
             Dictionary<string, int> Ges_adressen = new Dictionary<string, int>();
             List<int> stunden = new List<int>();
@@ -291,6 +295,7 @@ namespace fw_statistik
             dt.Columns.Add("Brand", Type.GetType("System.Int32"));
             dt.Columns.Add("Th", Type.GetType("System.Int32"));
             dt.Columns.Add("Andere", Type.GetType("System.Int32"));
+            dt.Columns.Add("Durchschnitt", Type.GetType("System.Int32"));
 
 
             foreach (Einsatz einsatz in einsätze)
@@ -305,7 +310,7 @@ namespace fw_statistik
 
             foreach (int stunde in stunden)
             {
-                int brände = 0, th = 0, andere = 0;
+                int brände = 0, th = 0, andere = 0, durchschnitt=0;
 
 
                 foreach (Einsatz einsatz in einsätze)
@@ -325,6 +330,7 @@ namespace fw_statistik
                         {
                             andere++;
                         }
+                        durchschnitt++;
                     }
                 }
 
@@ -333,9 +339,20 @@ namespace fw_statistik
                 dr1["Brand"] = brände;
                 dr1["Th"] = th;
                 dr1["Andere"] = andere;
+                dr1["Durchschnitt"] = durchschnitt;
                 dt.Rows.Add(dr1);
 
             }
+
+            Series s1 = new Series();
+            s1.Name = "Komplett";
+            s1.Color = Color.Black;
+
+
+
+
+            List<Point> durchschnitt_points = new List<Point>();
+
 
             for (int i = 1; i < dt.Columns.Count; i++)
             {
@@ -344,30 +361,73 @@ namespace fw_statistik
                 foreach (DataRow dr in dt.Rows)
                 {
                     int y = (int)dr[i];
-                    series.Points.AddXY(dr["Stunde"].ToString(), y);
-                    series.Name = dt.Columns[i].ColumnName;
+                    if (dt.Columns[i].ColumnName != "Durchschnitt")
+                    {                       
+                        series.Points.AddXY(dr["Stunde"].ToString(), y);
+                        series.Name = dt.Columns[i].ColumnName;
+
+                     
+                       
+
+
+                    }
+                    else
+                    {
+                        durchschnitt_points.Add(new Point(Convert.ToInt32(dr["Stunde"]), Convert.ToInt32(dr["Durchschnitt"].ToString())));
+                    }
+
 
                     if (series.Name == "Brand")
                     {
                         series.Color = Color.Tomato;
+                      
+                       
+
                     }
                     if (series.Name == "Th")
                     {
                         series.Color = Color.LightBlue;
+                       
+                    
                     }
                     if (series.Name == "Andere")
                     {
                         series.Color = Color.Orange;
+                      
                     }
+                    
+
 
                 }
 
-                chart1.Series.Add(series);
+                if (series.Name != "Durchschnitt")
+                {
+                    chart.Series.Add(series);
+                }
+
             }
 
+            durchschnitt_points = durchschnitt_points.OrderByDescending(p => p.X).ToList();
+            
 
-            chart1.Invalidate();
-            chart1.Update();
+            foreach (Point p in durchschnitt_points)
+            {
+                s1.Points.AddXY(p.X+0.5, p.Y);
+            }
+
+          
+
+
+
+            s1.ChartType = SeriesChartType.Spline;
+            s1.Points.AddXY(0, 0);
+            s1.Points.AddXY(25, 0);
+            chart.Series.Add(s1);
+
+          
+
+            chart.Invalidate();
+            chart.Update();
 
         }
 
@@ -394,13 +454,12 @@ namespace fw_statistik
 
         private void einsatzOrteGesammtToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
-            charting1_gesammt(einsätze);
+            charting1_gesammt(einsätze, chart1);
         }
 
         private void einsatzorteNachJahrenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            charting1_nach_jahren_stichwort(einsätze);
+            charting1_nach_jahren_stichwort(einsätze,chart1);
         }
 
         private void charts_Resize(object sender, EventArgs e)
@@ -410,12 +469,12 @@ namespace fw_statistik
 
         private void einsatzstichwortNachMonatenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            charting_nach_Monaten_stichwort(einsätze);
+            charting_nach_Monaten_stichwort(einsätze,chart1);
         }
 
         private void einsatzstichwortNachTageszeitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            charting_nach_tageszeit_stichwort(einsätze);
+            charting_nach_tageszeit_stichwort(einsätze,chart1);
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -423,6 +482,90 @@ namespace fw_statistik
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 this.chart1.SaveImage(saveFileDialog1.FileName, ChartImageFormat.Png);
+            }
+        }
+
+        private void toolStripMenuItem8_Click(object sender, EventArgs e)
+        {
+            charting1_gesammt(einsätze, chart2);
+        }
+
+        private void toolStripMenuItem9_Click(object sender, EventArgs e)
+        {
+            charting1_nach_jahren_stichwort(einsätze, chart2);
+        }
+
+        private void toolStripMenuItem10_Click(object sender, EventArgs e)
+        {
+            charting_nach_Monaten_stichwort(einsätze, chart2);
+        }
+
+        private void toolStripMenuItem11_Click(object sender, EventArgs e)
+        {
+            charting_nach_tageszeit_stichwort(einsätze, chart2);
+        }
+
+        private void toolStripMenuItem12_Click(object sender, EventArgs e)
+        {
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                this.chart2.SaveImage(saveFileDialog1.FileName, ChartImageFormat.Png);
+            }
+        }
+
+        private void toolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            charting1_gesammt(einsätze, chart3);
+        }
+
+        private void toolStripMenuItem3_Click(object sender, EventArgs e)
+        {
+            charting1_nach_jahren_stichwort(einsätze, chart3);
+        }
+
+        private void toolStripMenuItem4_Click(object sender, EventArgs e)
+        {
+            charting_nach_Monaten_stichwort(einsätze, chart3);
+        }
+
+        private void toolStripMenuItem5_Click(object sender, EventArgs e)
+        {
+            charting_nach_tageszeit_stichwort(einsätze, chart3);
+        }
+
+        private void toolStripMenuItem6_Click(object sender, EventArgs e)
+        {
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                this.chart3.SaveImage(saveFileDialog1.FileName, ChartImageFormat.Png);
+            }
+        }
+
+        private void einsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            charting1_gesammt(einsätze, chart4);
+        }
+
+        private void einsatzstichwortNachJahrenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            charting1_nach_jahren_stichwort(einsätze, chart4);
+        }
+
+        private void einsatzstichwortNachMonatenToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            charting_nach_Monaten_stichwort(einsätze, chart4);
+        }
+
+        private void einsatzstichwortNachTageszeitToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            charting_nach_tageszeit_stichwort(einsätze, chart4);
+        }
+
+        private void saveToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                this.chart4.SaveImage(saveFileDialog1.FileName, ChartImageFormat.Png);
             }
         }
     }

@@ -13,6 +13,7 @@ using GMap.NET.MapProviders;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
+using fw_statistik.Forms;
 
 namespace fw_statistik
 {
@@ -124,7 +125,11 @@ namespace fw_statistik
 
         private void openToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            // load_data_from_file(false);
+            openFileDialog1.Filter = ".xmf|*.xmf";
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                load_data_from_xmf_file(openFileDialog1.FileNames, false);
+            }
         }
 
         private void fromLastImportToolStripMenuItem_Click(object sender, EventArgs e)
@@ -143,13 +148,10 @@ namespace fw_statistik
 
         private void button2_Click(object sender, EventArgs e)
         {
-            MainMap.MapProvider = GMapProviders.GoogleMap;
+            MainMap.MapProvider = GMapProviders.OpenStreetMap;
         }
 
-        private void mergeToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            load_data_from_csv_file(true);
-        }
+        
 
         private void layer_CheckedChanged(object sender, EventArgs e)
         {
@@ -254,7 +256,7 @@ namespace fw_statistik
             if (einsatz.Coor.Lat == 0 && einsatz.Coor.Lng == 0)
             {
 
-                point_ = getpoint_byname(einsatz.Ges_addresse);
+                point_ = getpoint_byname(einsatz.Adresse.Address);
 
 
 
@@ -327,9 +329,9 @@ namespace fw_statistik
                 {
                     foreach (mymarker m in alle.Markers)
                     {
-                        if (m.Einsatz.Ges_addresse.ToLower().Replace(" ", string.Empty) == einsatz.Ges_addresse.ToLower().Replace(" ", string.Empty))
+                        if (m.Einsatz.Adresse.Address == einsatz.Adresse.Address)
                         {
-                            m.ToolTipText = m.ToolTipText + Environment.NewLine + einsatz.Alarm_datum + "," + einsatz.Ges_addresse + "," + einsatz.Art + "," + einsatz.Einsatzstichwort;
+                            m.ToolTipText = m.ToolTipText + Environment.NewLine + einsatz.Alarm_datum + "," + einsatz.Adresse.Address+"," + einsatz.Art + "," + einsatz.Einsatzstichwort;
 
                             create_new = false;
                         }
@@ -465,7 +467,7 @@ namespace fw_statistik
             mymarker marker = new mymarker(point_, farbe, einsatz);
 
             marker.Size = new System.Drawing.Size(10, 10);
-            marker.ToolTipText = einsatz.Alarm_datum + "-" + einsatz.End_datum + "," + einsatz.Ges_addresse + "," + einsatz.Art + "," + einsatz.Einsatzstichwort;
+            marker.ToolTipText =einsatz.Alarm_datum + "," + einsatz.Adresse.Address + "," + einsatz.Art + "," + einsatz.Einsatzstichwort;
 
             marker.ToolTip.Fill = Brushes.Black;
             marker.ToolTip.Foreground = Brushes.White;
@@ -533,9 +535,35 @@ namespace fw_statistik
             return point_;
         }
 
-       
 
-      //  public List<WebKitBrowser> l_wkb = new List<WebKitBrowser>();
+        public Placemark getname_bypoint(PointLatLng point)
+        {
+            Placemark adress_= new Placemark();
+            try
+            {
+                GeoCoderStatusCode gcsc = new GeoCoderStatusCode();
+
+                Placemark? name_p = GMapProviders.GoogleMap.GetPlacemark(point, out gcsc);
+
+                if (gcsc == GeoCoderStatusCode.G_GEO_SUCCESS && point != null)
+                {
+                    adress_ = name_p.Value;
+                }
+                else
+                {
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return adress_;
+        }
+
+
+
+        //  public List<WebKitBrowser> l_wkb = new List<WebKitBrowser>();
 
         private void createrouten_byeinsatz(Einsatz einsatz)
         {
@@ -543,7 +571,7 @@ namespace fw_statistik
             try
             {
                 GDirections ss;
-                var xx = GMapProviders.GoogleMap.GetDirections(out ss, (PointLatLng)point_fwh, (PointLatLng)getpoint_byname(einsatz.Ges_addresse), false, false, false, false, false);
+                var xx = GMapProviders.GoogleMap.GetDirections(out ss, (PointLatLng)point_fwh, (PointLatLng)getpoint_byname(einsatz.Adresse.LocalityName), false, false, false, false, false);
                 GMapRoute r = new GMapRoute(ss.Route, "My route");
 
 
@@ -559,194 +587,10 @@ namespace fw_statistik
                 Console.WriteLine("fehler beim routen");
             }
         }
-
-        private void load_data_from_csv_file(bool merge)
-        {
-            openFileDialog1.Filter = ".csv|*.csv";
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                if (merge == false)
-                {
-                    error_count = 0;
-                    einsätze.Clear();
-                    Orte.Clear();
-                    distanzen.Clear();
-                    MainMap.Overlays.Clear();
-
-
-                    alle = new GMapOverlay("alle");
-                    extra = new GMapOverlay("extra");
-                    routesOverlay = new GMapOverlay("routes");
-
-                    th = new GMapOverlay("th");
-                    brand = new GMapOverlay("brand");
-                    andere = new GMapOverlay("andere");
-
-                    MainMap.Overlays.Add(th);
-                    MainMap.Overlays.Add(brand);
-                    MainMap.Overlays.Add(andere);
-                    MainMap.Overlays.Add(alle);
-                    MainMap.Overlays.Add(extra);
-                }
-
-                string lines = "";
-                int ls = 0;
-
-                foreach (string names in openFileDialog1.FileNames)
-                {
-                    using (StreamReader sr = new StreamReader(names, System.Text.Encoding.Default))
-                    {
-                        lines = sr.ReadToEnd();
-                        ls += lines.Split(new string[] { Environment.NewLine }, StringSplitOptions.None).Length;
-
-
-                    }
-                }
-
-                toolStripProgressBar1.Maximum = ls;
-                ls = 0;
-
-
-                UseWaitCursor = true;
-                foreach (string names in openFileDialog1.FileNames)
-                {
-                    using (StreamReader sr = new StreamReader(names, System.Text.Encoding.Default))
-                    {
-
-                        while (sr.Peek() >= 0)
-                        {
-                            string RAW_line = sr.ReadLine();
-                            toolStripProgressBar1.Value += 1;
-                            try
-                            {
-                                DateTime ALARM_DATUM, END_DATUM;
-                                String einsatzstichwort, ort, straße, hausnummer, art, ges_addresse;
-
-
-                                try
-                                {
-
-
-                                    ALARM_DATUM = Convert.ToDateTime(RAW_line.Split(';')[2]);
-                                }
-                                catch
-                                {
-                                    ALARM_DATUM = new DateTime(1, 1, 1);
-                                }
-
-                                try
-                                {
-
-
-                                    END_DATUM = Convert.ToDateTime(RAW_line.Split(';')[3]);
-                                }
-                                catch
-                                {
-                                    END_DATUM = new DateTime(1, 1, 1);
-                                }
-
-
-
-                                einsatzstichwort = RAW_line.Split(';')[0];
-                                ges_addresse = RAW_line.Split(';')[1];
-
-
-                                if (ges_addresse.Split(new char[] { ' ' }).Length >= 2)
-                                {
-                                    straße = ges_addresse.Split(new char[] { ' ' })[1];
-                                }
-                                else
-                                {
-                                    straße = "";
-                                }
-
-                                if (ges_addresse.Split(new char[] { ' ' }).Length >= 3)
-                                {
-                                    hausnummer = ges_addresse.Split(new char[] { ' ' })[2];
-                                }
-                                else
-                                {
-                                    hausnummer = "";
-                                }
-
-                                ort = ges_addresse.Split(new char[] { ' ' })[0];
-
-                                art = RAW_line.Split(';')[4];
-
-                                Einsatz einsatz = new Einsatz(names,ALARM_DATUM, END_DATUM, einsatzstichwort, ges_addresse, ort, straße, hausnummer, art);
-
-                                try
-                                {
-                                    einsätze.Add(einsatz);
-                                    maps_marker(einsatz);
-
-                                    //   createrouten_byeinsatz(einsatz);
-
-                                }
-                                catch (Exception ex)
-                                {
-                                    MessageBox.Show(einsatz.Ges_addresse);
-                                    continue;
-
-                                }
-
-
-                            }
-                            catch (Exception ex)
-                            {
-                                MessageBox.Show(ex.Message + ": " + RAW_line);
-
-                            }
-                        }
-
-
-
-                        if (!merge)
-                        {
-                            MainMap.Overlays.Add(routesOverlay);
-                        }
-
-                    }
-
-                    foreach (Einsatz einsatz in einsätze)
-                    {
-                        if (Orte.ContainsKey(einsatz.Ges_addresse.ToLower()))
-                        {
-                            Orte[einsatz.Ges_addresse.ToLower()] = Orte[einsatz.Ges_addresse.ToLower()] + 1;
-                        }
-                        else
-                        {
-                            Orte.Add(einsatz.Ges_addresse.ToLower(), 1);
-                        }
-
-                    }
-                    Orte = Orte.OrderBy(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
-
-
-                    Console.WriteLine("Ort:anzahl der einsätze");
-
-                    foreach (KeyValuePair<string, int> data in Orte)
-                    {
-                        Console.WriteLine(data.Key + ":" + data.Value);
-
-                    }
-                }
-
-
-
-
-            }
-
-            post();
-        }
-
-
-
+        
         private void load_data_from_xmf_file(String[] filenames, bool merge)
         {
-            //openFileDialog1.Filter = ".xmf|*.xmf";
-            //if (openFileDialog1.ShowDialog() == DialogResult.OK)
-            //{
+
             if (merge == false)
             {
                 error_count = 0;
@@ -793,6 +637,7 @@ namespace fw_statistik
             UseWaitCursor = true;
             foreach (string names in openFileDialog1.FileNames)
             {
+                toolStripProgressBar1.Value++;
                 using (StreamReader sr = new StreamReader(names, System.Text.Encoding.UTF8))
                 {
 
@@ -838,26 +683,38 @@ namespace fw_statistik
                     String[] Gruppen = raw[5].Split(new[] { '<', '>' })[2].Split(',');
                     bool fehl = false;
 
-                    String Ort = "";
-                    String Straße = "";
-                    String Hausnummer = "";
+                    Placemark Adresse = new Placemark();
+                    //String Straße = "";
+                    //String Hausnummer = "";
                     try
                     {
 
-                        if (addresse.Contains(','))
-                        {
-                            Ort = addresse.Split(',')[1];
-                        }
-                        else
-                        {
-                            Ort = "Stadthagen";
-                        }
+                        //if (addresse.Contains(','))
+                        //{
+                        //    if (getpoint_byname(addresse) != PointLatLng.Empty)
+                        //    {
 
-                        addresse = addresse + "," + Ort;
+                        //        Adresse = getname_bypoint(getpoint_byname(addresse));
+                        //    }
+                        //    else
+                        //    {
 
 
-                        Straße = addresse.Split(',')[0].Split(' ')[0];
-                        Hausnummer = addresse.Split(',')[0].Split(' ')[1];
+                        //        Adresse.LocalityName = "Stadthagen";
+                        //    }
+                        //}
+                        //else
+                        //{
+                        //    Adresse.LocalityName = "Stadthagen";
+                        //}
+
+                        // addresse = addresse + "," + Adresse;
+
+                        Adresse = try_get_address(addresse);
+
+
+                        //Straße = addresse.Split(',')[0].Split(' ')[0];
+                        //Hausnummer = addresse.Split(',')[0].Split(' ')[1];
                     }
                     catch (Exception ex)
                     {
@@ -879,12 +736,11 @@ namespace fw_statistik
                             String raw_bes = item.Substring(item.IndexOf(">") + 1, (item.LastIndexOf("<") - item.IndexOf(">")) - 1);
 
 
-                            //string GF = "";
                             foreach (string b in raw_bes.Split(';'))
                             {
                                 if (b.Length > 0)
                                 {
-                                    string name = b/*.Replace(" ", "")*/;
+                                    string name = b;
                                     string name_="";
 
                                     if (name.StartsWith("Gf:"))
@@ -953,22 +809,23 @@ namespace fw_statistik
                         }
                     }
 
-                    Einsatz einsatz = new Einsatz(names, alarm_datum, end_datum, stichwort, addresse, Ort, Straße, Hausnummer, Art,fehl,String.Join(";",Gruppen))
-                    {  
-                        Fahrzeuge = Fahrzeuge
+                    Einsatz einsatz = new Einsatz(names, alarm_datum, end_datum, stichwort, Adresse, Art, fehl, String.Join(";", Gruppen), getpoint_byname(Adresse.Address));
+                    {
+                        einsatz.Fahrzeuge = Fahrzeuge;
                     };
 
                     try
                     {
                         einsätze.Add(einsatz);
-                        maps_marker(einsatz);
 
-                        //   createrouten_byeinsatz(einsatz);
+                        if (Adresse.Address != null)
+                            maps_marker(einsatz);
+
 
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(einsatz.Ges_addresse);
+                        MessageBox.Show(einsatz.Adresse.LocalityName);
                         continue;
 
                     }
@@ -992,15 +849,18 @@ namespace fw_statistik
 
             foreach (Einsatz einsatz in einsätze)
             {
-                if (Orte.ContainsKey(einsatz.Ges_addresse.ToLower()))
+                if (einsatz.Adresse.LocalityName != null)
                 {
-                    Orte[einsatz.Ges_addresse.ToLower()] = Orte[einsatz.Ges_addresse.ToLower()] + 1;
-                }
-                else
-                {
-                    Orte.Add(einsatz.Ges_addresse.ToLower(), 1);
-                }
+                    if (Orte.ContainsKey(einsatz.Adresse.LocalityName.ToLower()))
+                    {
+                        Orte[einsatz.Adresse.LocalityName.ToLower()] = Orte[einsatz.Adresse.LocalityName.ToLower()] + 1;
+                    }
+                    else
+                    {
+                        Orte.Add(einsatz.Adresse.LocalityName.ToLower(), 1);
+                    }
 
+                }
             }
             Orte = Orte.OrderBy(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
 
@@ -1018,6 +878,44 @@ namespace fw_statistik
             post();
 
         }
+
+        private Placemark try_get_address(String addresse)
+        {
+            Placemark Address = new Placemark();
+            if (addresse.Contains(','))
+            {
+                if (getpoint_byname(addresse) != PointLatLng.Empty)
+                {
+
+                    Address = getname_bypoint(getpoint_byname(addresse));
+                }
+            }
+            else
+            {
+                if (getpoint_byname(addresse+", Stadthagen") != PointLatLng.Empty)
+                {
+
+                    Address = getname_bypoint(getpoint_byname(addresse + ", Stadthagen"));
+                }
+            }
+
+            if(String.IsNullOrEmpty(Address.Address))
+            {
+                Form2 form2 = new Form2();
+                form2.Adresse = addresse;
+                form2.ShowDialog();
+                addresse = form2.Adresse;
+
+                try_get_address(addresse);
+
+
+            }
+
+
+            return Address;
+        }
+
+
 
 
         public DateTime try_coorect_format(String to_check)
@@ -1081,16 +979,15 @@ namespace fw_statistik
 
 
             Einsatzstatistik c = new Einsatzstatistik(einsätze);
-           
 
-            MainMap.Overlays[MainMap.Overlays.IndexOf(alle)].IsVisibile = false;
+            if (MainMap.Overlays.Contains(alle))
+                MainMap.Overlays[MainMap.Overlays.IndexOf(alle)].IsVisibile = false;
 
             toolStripProgressBar1.Value = 0;
 
             foreach (Einsatz einsatz in einsätze)
             {
-
-                toolStripComboBox1.Items.Add(einsatz.Einsatzstichwort + "_" + einsatz.Ges_addresse + "_" + einsatz.Alarm_datum);
+                toolStripComboBox1.Items.Add(einsatz.Einsatzstichwort + "_" + einsatz.Adresse.Address + "_" + einsatz.Alarm_datum);
             }
             toolStripComboBox1.Sorted = true;
 
@@ -1100,37 +997,13 @@ namespace fw_statistik
             {
                 points.Add(m.Position);
             }
-
-            //hmo = new HeatMapOverlay("heat", MainMap, points.ToArray());
-
-
-            //MainMap.Overlays.Add(hmo);
-
-
-
+            
             UseWaitCursor = false;
-            //  c.Show();
         }
 
 
 
-       // HeatMapOverlay hmo;
-
-        //private void heatmap(List<PointLatLng> points_)
-        //{
-        //    using (StreamWriter sw = new StreamWriter("points.txt"))
-        //    {
-        //        foreach (PointLatLng p in points_)
-        //        {
-        //            string lat = Convert.ToString(p.Lat, CultureInfo.InvariantCulture);
-        //            string lng = Convert.ToString(p.Lng, CultureInfo.InvariantCulture);
-
-        //            sw.WriteLine(lat + "," + lng);
-        //        }
-        //    }
-
-        //}
-
+     
 
 
 
@@ -1156,7 +1029,7 @@ namespace fw_statistik
                 DateTime az = Convert.ToDateTime(toolStripComboBox1.Text.Split(new char[] { '_' })[2]);
 
                 if (ei.Einsatzstichwort == sw
-                    && ei.Ges_addresse == ga
+                    && ei.Adresse.LocalityName == ga
                     && ei.Alarm_datum == az)
                 {
                     ein = ei;
@@ -1178,7 +1051,7 @@ namespace fw_statistik
                         GMarkerGoogleType farbe = new GMarkerGoogleType();
 
 
-                        PointLatLng point_ = getpoint_byname(ein.Ges_addresse);
+                        PointLatLng point_ = getpoint_byname(ein.Adresse.LocalityName);
                         ein.Coor = point_;
                         createMarker(ein, farbe, point_);
 
@@ -1187,10 +1060,9 @@ namespace fw_statistik
                         foreach (Einsatz einsatz in einsätze)
                         {
 
-                            toolStripComboBox1.Items.Add(einsatz.Einsatzstichwort + "_" + einsatz.Ges_addresse + "_" + einsatz.Alarm_datum);
+                            toolStripComboBox1.Items.Add(einsatz.Einsatzstichwort + "_" + einsatz.Adresse.Address + "_" + einsatz.Alarm_datum);
                         }
                         toolStripComboBox1.Sorted = true;
-
 
 
 
@@ -1240,12 +1112,7 @@ namespace fw_statistik
         private void exportMarkerToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
-            List<PointLatLng> points = new List<PointLatLng>();
-            foreach (GMapMarker m in alle.Markers)
-            {
-                points.Add(m.Position);
-            }
-            new_heat_map(points);
+           
         }
 
         private void MainMap_Scroll(object sender, ScrollEventArgs e)
@@ -1289,17 +1156,10 @@ namespace fw_statistik
 
         private void xMFToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            openFileDialog1.Filter = ".xmf|*.xmf";
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                load_data_from_xmf_file(openFileDialog1.FileNames, false);
-            }
+          
         }
 
-        private void cSVToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            load_data_from_csv_file(false);
-        }
+        
 
         private void MainMap_OnMarkerClick_1(GMapMarker item, MouseEventArgs e)
         {
@@ -1333,7 +1193,7 @@ namespace fw_statistik
                         GMarkerGoogleType farbe = new GMarkerGoogleType();
 
 
-                        PointLatLng point_ = getpoint_byname(ein.Ges_addresse);
+                        PointLatLng point_ = getpoint_byname(ein.Adresse.Address);
                         ein.Coor = point_;
                         createMarker(ein, farbe, point_);
 
@@ -1342,7 +1202,7 @@ namespace fw_statistik
                         foreach (Einsatz einsatz in einsätze)
                         {
 
-                            toolStripComboBox1.Items.Add(einsatz.Einsatzstichwort + "_" + einsatz.Ges_addresse + "_" + einsatz.Alarm_datum);
+                            toolStripComboBox1.Items.Add(einsatz.Einsatzstichwort + "_" + einsatz.Adresse.LocalityName + "_" + einsatz.Alarm_datum);
                         }
                         toolStripComboBox1.Sorted = true;
 
@@ -1373,7 +1233,7 @@ namespace fw_statistik
             using (StreamWriter sw = new StreamWriter(path))
             {
                 sw.WriteLine("<stichwort>" + einsatz.Einsatzstichwort + "</stichwort>");
-                sw.WriteLine("<addresse>" + einsatz.Ges_addresse + "</addresse>");
+                sw.WriteLine("<addresse>" + einsatz.Adresse.LocalityName + "</addresse>");
                 sw.WriteLine("<anfang>" + einsatz.Alarm_datum + "</anfang>");
                 sw.WriteLine("<ende>" + einsatz.End_datum + "</ende>");
                 sw.WriteLine("<art>" + einsatz.Art + "</art>");
@@ -1426,6 +1286,16 @@ namespace fw_statistik
         private void toolStripComboBox1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void showConsoleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }

@@ -46,7 +46,7 @@ namespace fw_statistik
 
         private void Import_file_msgbox_Load(object sender, EventArgs e)
         {
-           textBox1.Text= einsatz.Ges_addresse + " konnte nicht gefunden werden. Wollen Sie jetzt per Hand danach suchen?";
+           textBox1.Text= einsatz.Adresse.Address + " konnte nicht gefunden werden. Wollen Sie jetzt per Hand danach suchen?";
             panel1.BackgroundImage = SystemIcons.Question.ToBitmap();
         }
 

@@ -44,7 +44,7 @@ namespace fw_statistik
             tb_meldung.Text = ein.Art;
             tb_mzeit.Text = ein.Alarm_datum.ToString();
             tb_stichwort.Text = ein.Einsatzstichwort;
-            tb_ort.Text = ein.Ges_addresse;
+            tb_adresse.Text = ein.Adresse.Address;
             tb_distanz.Text = Convert.ToString(Math.Round(ein.Route.Distance,2));
             tb_fehl.Text = ein.Fehl.ToString();
             tb_grp.Text = ein.Gruppen;
