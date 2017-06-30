@@ -117,32 +117,7 @@ namespace fw_statistik
 
         #endregion Global_values
 
-       
-
-
-        //XmlDocument xmlDoc = new XmlDocument();
-        //XmlNode rootNode = xmlDoc.CreateElement("users");
-        //xmlDoc.AppendChild(rootNode);
-
-        //    XmlNode userNode = xmlDoc.CreateElement("user");
-        //XmlAttribute attribute = xmlDoc.CreateAttribute("age");
-        //attribute.Value = "42";
-        //    userNode.Attributes.Append(attribute);
-        //    userNode.InnerText = "John Doe";
-        //    rootNode.AppendChild(userNode);
-
-        //    userNode = xmlDoc.CreateElement("user");
-        //    attribute = xmlDoc.CreateAttribute("age");
-        //    attribute.Value = "39";
-        //    userNode.Attributes.Append(attribute);
-        //    userNode.InnerText = "Jane Doe";
-        //    rootNode.AppendChild(userNode);
-
-        //    xmlDoc.Save("test-doc.xml");
-
-
-
-
+      
 
         private void Form1_Shown(object sender, EventArgs e)
         {
@@ -456,6 +431,11 @@ namespace fw_statistik
                     farbe = GMap.NET.WindowsForms.Markers.GMarkerGoogleType.red_dot;
                     SIZE = 25;
                     break;
+                case "RWM":
+                    farbe = GMap.NET.WindowsForms.Markers.GMarkerGoogleType.red_dot;
+                    SIZE = 20;
+                    break;
+
 
                 default:
                     farbe = GMap.NET.WindowsForms.Markers.GMarkerGoogleType.yellow_pushpin;
@@ -648,6 +628,22 @@ namespace fw_statistik
                     end_datum = DateTime.Parse(AlarmzeitEditor.Einsatzende);
 
                 }
+                TimeSpan einsatzDauer = end_datum - alarm_datum;
+
+                if (einsatzDauer.TotalDays>3)
+                {
+                    Alarmzeit_Editor AlarmzeitEditor = new Alarmzeit_Editor()
+                    {
+                        Alarmzeit = raw[2].Split(new[] { '<', '>' })[2].TrimEnd(' '),
+                        Einsatzende = raw[3].Split(new[] { '<', '>' })[2]
+                    };
+
+                    AlarmzeitEditor.ShowDialog();
+
+                    alarm_datum = DateTime.Parse(AlarmzeitEditor.Alarmzeit);
+                    end_datum = DateTime.Parse(AlarmzeitEditor.Einsatzende);
+                }
+
                 
                 bool fehl = false;
 
@@ -680,7 +676,7 @@ namespace fw_statistik
 
                         foreach (string besatzungsteil in BesatzungStringRAW.Split(';'))
                         {
-                            if (besatzungsteil.Length > 0)
+                            if (besatzungsteil.Length > 0&& besatzungsteil.Length<30)
                             {
                                 string name = besatzungsteil;
                                 bool isGrf = false;
@@ -851,7 +847,7 @@ namespace fw_statistik
 
         public DateTime TryCorrectFormat(String to_check)
         {
-            DateTime correctedDateTime= DateTime.Now;
+            DateTime correctedDateTime = DateTime.Now;
             try
             {
                 string[] parts = to_check.Split(new[] { ' ' });
@@ -867,16 +863,17 @@ namespace fw_statistik
 
                 correctedDateTime = DateTime.Parse(joinedString);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex);
-                
+
             }
             return correctedDateTime;
         }
 
 
-       private void PostImportLogic()
+
+        private double getaveDistance()
         {
             double durchschnittlicheDistanz = 0;
 
@@ -889,7 +886,66 @@ namespace fw_statistik
             }
             durchschnittlicheDistanz = durchschnittlicheDistanz / distanzen.Count;
 
-            l_fahrtweg.Text = Convert.ToString(Math.Round(durchschnittlicheDistanz, 2));
+            return durchschnittlicheDistanz;
+        }
+
+
+        private double getAveTime()
+        {
+            double totalTimeInMinutes = 0;
+
+            foreach (Einsatz einsatz in einsätze)
+            {
+                if ((einsatz.End_datum > einsatz.Alarm_datum)&&(einsatz.End_datum.TimeOfDay.ToString()!="00:00:00"))
+                {
+                    TimeSpan span = einsatz.End_datum - einsatz.Alarm_datum;
+
+                    totalTimeInMinutes += span.TotalMinutes;
+                }
+                else
+                {
+
+                }
+            }
+
+            double aveTime = (totalTimeInMinutes/60)/einsätze.Count;
+
+            return aveTime;
+        }
+
+
+
+        private double getAvePersonal()
+        {
+            double totalPersonal = 0;
+
+            foreach (Einsatz einsatz in einsätze)
+            {
+              foreach(Fahrzeug fahrzeug in einsatz.Fahrzeuge)
+                {
+                    foreach(Feuerwehrmann feuerwehrmann in fahrzeug.Besatzung)
+                    {
+                        totalPersonal++;
+                    }
+                }
+            }
+
+            double avePersonal = totalPersonal/einsätze.Count ;
+
+            return avePersonal;
+        }
+
+
+
+
+        private void PostImportLogic()
+        {
+            
+
+
+            l_proTag.Text =Convert.ToString(Math.Round(((double)einsätze.Count / (double)365), 2));
+
+            l_fahrtweg.Text = Convert.ToString(Math.Round(getaveDistance(), 2));
 
 
             l_einsätze_count.Text = Convert.ToString(einsätze.Count);
@@ -897,6 +953,10 @@ namespace fw_statistik
             l_th_count.Text = Convert.ToString(thOverlay.Markers.Count());
             l_brand_count.Text = Convert.ToString(brandOverlay.Markers.Count());
             l_ubungen.Text = Convert.ToString(andereOverlay.Markers.Count());
+
+            l_ddauer.Text = Convert.ToString(Math.Round(getAveTime(),2));
+
+            l_dkrafte.Text = Convert.ToString(Math.Round(getAvePersonal(),2));
 
             l_load_error.Text = Convert.ToString(error_count);
 
@@ -1122,6 +1182,9 @@ namespace fw_statistik
             Close();
         }
 
-       
+        private void panel2_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

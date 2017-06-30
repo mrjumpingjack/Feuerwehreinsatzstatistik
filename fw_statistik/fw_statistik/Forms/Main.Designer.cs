@@ -65,6 +65,12 @@ namespace fw_statistik
             this.sstrip_main = new System.Windows.Forms.StatusStrip();
             this.tsPbImportFortschritt = new System.Windows.Forms.ToolStripProgressBar();
             this.MainMap = new GMap.NET.WindowsForms.GMapControl();
+            this.l_ddauer = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.l_dkrafte = new System.Windows.Forms.Label();
+            this.l_dkrafte_title = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.l_proTag = new System.Windows.Forms.Label();
             this.ms_main.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -139,14 +145,14 @@ namespace fw_statistik
             // fromLastImportToolStripMenuItem
             // 
             this.fromLastImportToolStripMenuItem.Name = "fromLastImportToolStripMenuItem";
-            this.fromLastImportToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
+            this.fromLastImportToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.fromLastImportToolStripMenuItem.Text = "Einsätze";
             this.fromLastImportToolStripMenuItem.Click += new System.EventHandler(this.fromLastImportToolStripMenuItem_Click);
             // 
             // mannschaftToolStripMenuItem
             // 
             this.mannschaftToolStripMenuItem.Name = "mannschaftToolStripMenuItem";
-            this.mannschaftToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
+            this.mannschaftToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.mannschaftToolStripMenuItem.Text = "Mannschaft";
             this.mannschaftToolStripMenuItem.Click += new System.EventHandler(this.mannschaftToolStripMenuItem_Click);
             // 
@@ -241,7 +247,7 @@ namespace fw_statistik
             // 
             this.l_einsätze_count.AutoSize = true;
             this.l_einsätze_count.ForeColor = System.Drawing.SystemColors.Control;
-            this.l_einsätze_count.Location = new System.Drawing.Point(83, 16);
+            this.l_einsätze_count.Location = new System.Drawing.Point(85, 16);
             this.l_einsätze_count.Name = "l_einsätze_count";
             this.l_einsätze_count.Size = new System.Drawing.Size(10, 13);
             this.l_einsätze_count.TabIndex = 6;
@@ -251,6 +257,12 @@ namespace fw_statistik
             // 
             this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.panel2.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.panel2.Controls.Add(this.l_proTag);
+            this.panel2.Controls.Add(this.label5);
+            this.panel2.Controls.Add(this.l_dkrafte);
+            this.panel2.Controls.Add(this.l_dkrafte_title);
+            this.panel2.Controls.Add(this.l_ddauer);
+            this.panel2.Controls.Add(this.label10);
             this.panel2.Controls.Add(this.l_load_error);
             this.panel2.Controls.Add(this.label7);
             this.panel2.Controls.Add(this.l_fahrtweg);
@@ -263,16 +275,17 @@ namespace fw_statistik
             this.panel2.Controls.Add(this.label1);
             this.panel2.Controls.Add(this.label2);
             this.panel2.Controls.Add(this.l_einsätze_count);
-            this.panel2.Location = new System.Drawing.Point(971, 30);
+            this.panel2.Location = new System.Drawing.Point(958, 30);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(113, 159);
+            this.panel2.Size = new System.Drawing.Size(126, 262);
             this.panel2.TabIndex = 7;
+            this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
             // 
             // l_load_error
             // 
             this.l_load_error.AutoSize = true;
             this.l_load_error.ForeColor = System.Drawing.SystemColors.Control;
-            this.l_load_error.Location = new System.Drawing.Point(83, 133);
+            this.l_load_error.Location = new System.Drawing.Point(87, 224);
             this.l_load_error.Name = "l_load_error";
             this.l_load_error.Size = new System.Drawing.Size(10, 13);
             this.l_load_error.TabIndex = 17;
@@ -282,7 +295,7 @@ namespace fw_statistik
             // 
             this.label7.AutoSize = true;
             this.label7.ForeColor = System.Drawing.SystemColors.Control;
-            this.label7.Location = new System.Drawing.Point(3, 133);
+            this.label7.Location = new System.Drawing.Point(5, 224);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(76, 13);
             this.label7.TabIndex = 16;
@@ -292,7 +305,7 @@ namespace fw_statistik
             // 
             this.l_fahrtweg.AutoSize = true;
             this.l_fahrtweg.ForeColor = System.Drawing.SystemColors.Control;
-            this.l_fahrtweg.Location = new System.Drawing.Point(83, 107);
+            this.l_fahrtweg.Location = new System.Drawing.Point(85, 172);
             this.l_fahrtweg.Name = "l_fahrtweg";
             this.l_fahrtweg.Size = new System.Drawing.Size(10, 13);
             this.l_fahrtweg.TabIndex = 15;
@@ -302,7 +315,7 @@ namespace fw_statistik
             // 
             this.label6.AutoSize = true;
             this.label6.ForeColor = System.Drawing.SystemColors.Control;
-            this.label6.Location = new System.Drawing.Point(3, 107);
+            this.label6.Location = new System.Drawing.Point(3, 172);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(59, 13);
             this.label6.TabIndex = 14;
@@ -312,7 +325,7 @@ namespace fw_statistik
             // 
             this.l_ubungen.AutoSize = true;
             this.l_ubungen.ForeColor = System.Drawing.SystemColors.Control;
-            this.l_ubungen.Location = new System.Drawing.Point(83, 84);
+            this.l_ubungen.Location = new System.Drawing.Point(85, 94);
             this.l_ubungen.Name = "l_ubungen";
             this.l_ubungen.Size = new System.Drawing.Size(10, 13);
             this.l_ubungen.TabIndex = 13;
@@ -322,7 +335,7 @@ namespace fw_statistik
             // 
             this.l_th_count.AutoSize = true;
             this.l_th_count.ForeColor = System.Drawing.SystemColors.Control;
-            this.l_th_count.Location = new System.Drawing.Point(83, 60);
+            this.l_th_count.Location = new System.Drawing.Point(85, 68);
             this.l_th_count.Name = "l_th_count";
             this.l_th_count.Size = new System.Drawing.Size(10, 13);
             this.l_th_count.TabIndex = 12;
@@ -332,7 +345,7 @@ namespace fw_statistik
             // 
             this.l_brand_count.AutoSize = true;
             this.l_brand_count.ForeColor = System.Drawing.SystemColors.Control;
-            this.l_brand_count.Location = new System.Drawing.Point(83, 38);
+            this.l_brand_count.Location = new System.Drawing.Point(85, 42);
             this.l_brand_count.Name = "l_brand_count";
             this.l_brand_count.Size = new System.Drawing.Size(10, 13);
             this.l_brand_count.TabIndex = 11;
@@ -342,7 +355,7 @@ namespace fw_statistik
             // 
             this.label4.AutoSize = true;
             this.label4.ForeColor = System.Drawing.SystemColors.Control;
-            this.label4.Location = new System.Drawing.Point(3, 84);
+            this.label4.Location = new System.Drawing.Point(3, 94);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(44, 13);
             this.label4.TabIndex = 10;
@@ -352,7 +365,7 @@ namespace fw_statistik
             // 
             this.label3.AutoSize = true;
             this.label3.ForeColor = System.Drawing.SystemColors.Control;
-            this.label3.Location = new System.Drawing.Point(3, 60);
+            this.label3.Location = new System.Drawing.Point(3, 68);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(72, 13);
             this.label3.TabIndex = 9;
@@ -362,7 +375,7 @@ namespace fw_statistik
             // 
             this.label1.AutoSize = true;
             this.label1.ForeColor = System.Drawing.SystemColors.Control;
-            this.label1.Location = new System.Drawing.Point(3, 38);
+            this.label1.Location = new System.Drawing.Point(3, 42);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(74, 13);
             this.label1.TabIndex = 8;
@@ -422,6 +435,66 @@ namespace fw_statistik
             this.MainMap.TabIndex = 9;
             this.MainMap.Zoom = 0D;
             this.MainMap.OnMarkerClick += new GMap.NET.WindowsForms.MarkerClick(this.MainMap_OnMarkerClick_1);
+            // 
+            // l_ddauer
+            // 
+            this.l_ddauer.AutoSize = true;
+            this.l_ddauer.ForeColor = System.Drawing.SystemColors.Control;
+            this.l_ddauer.Location = new System.Drawing.Point(85, 120);
+            this.l_ddauer.Name = "l_ddauer";
+            this.l_ddauer.Size = new System.Drawing.Size(10, 13);
+            this.l_ddauer.TabIndex = 21;
+            this.l_ddauer.Text = "-";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.ForeColor = System.Drawing.SystemColors.Control;
+            this.label10.Location = new System.Drawing.Point(3, 120);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(47, 13);
+            this.label10.TabIndex = 20;
+            this.label10.Text = "Ø Dauer";
+            // 
+            // l_dkrafte
+            // 
+            this.l_dkrafte.AutoSize = true;
+            this.l_dkrafte.ForeColor = System.Drawing.SystemColors.Control;
+            this.l_dkrafte.Location = new System.Drawing.Point(85, 146);
+            this.l_dkrafte.Name = "l_dkrafte";
+            this.l_dkrafte.Size = new System.Drawing.Size(10, 13);
+            this.l_dkrafte.TabIndex = 23;
+            this.l_dkrafte.Text = "-";
+            // 
+            // l_dkrafte_title
+            // 
+            this.l_dkrafte_title.AutoSize = true;
+            this.l_dkrafte_title.ForeColor = System.Drawing.SystemColors.Control;
+            this.l_dkrafte_title.Location = new System.Drawing.Point(3, 146);
+            this.l_dkrafte_title.Name = "l_dkrafte_title";
+            this.l_dkrafte_title.Size = new System.Drawing.Size(70, 13);
+            this.l_dkrafte_title.TabIndex = 22;
+            this.l_dkrafte_title.Text = "Ø Anz. Kräfte";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.ForeColor = System.Drawing.SystemColors.Control;
+            this.label5.Location = new System.Drawing.Point(5, 198);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(48, 13);
+            this.label5.TabIndex = 24;
+            this.label5.Text = "Pro Tag:";
+            // 
+            // l_proTag
+            // 
+            this.l_proTag.AutoSize = true;
+            this.l_proTag.ForeColor = System.Drawing.SystemColors.Control;
+            this.l_proTag.Location = new System.Drawing.Point(87, 198);
+            this.l_proTag.Name = "l_proTag";
+            this.l_proTag.Size = new System.Drawing.Size(10, 13);
+            this.l_proTag.TabIndex = 25;
+            this.l_proTag.Text = "-";
             // 
             // Form1
             // 
@@ -490,6 +563,12 @@ namespace fw_statistik
         private System.Windows.Forms.ToolStripMenuItem addEinsatzToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mannschaftToolStripMenuItem;
+        private System.Windows.Forms.Label l_dkrafte;
+        private System.Windows.Forms.Label l_dkrafte_title;
+        private System.Windows.Forms.Label l_ddauer;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label l_proTag;
+        private System.Windows.Forms.Label label5;
     }
 }
 

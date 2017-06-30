@@ -169,9 +169,9 @@ namespace fw_statistik
            
 
             loadEinsätzeToListBox();
-            page1();
-            page2();
-            page3();
+            TeilnehmerStatistik();
+            FahrzeugbesatzungStatistik();
+            AlarmgruppenStatistik();
 
         }
 
@@ -222,7 +222,7 @@ namespace fw_statistik
             }
         }
         
-        private void page1()
+        private void TeilnehmerStatistik()
         {
             //chart füllen (page1)
             chart1.Series[0].IsValueShownAsLabel = true;
@@ -238,7 +238,7 @@ namespace fw_statistik
             chart1.Series[0].Sort(System.Windows.Forms.DataVisualization.Charting.PointSortOrder.Ascending);
         }
         
-        private void page2()
+        private void FahrzeugbesatzungStatistik()
         {
             //page 2
 
@@ -341,7 +341,7 @@ namespace fw_statistik
             }
         }
 
-        private void page3()
+        private void AlarmgruppenStatistik()
         {
             try
             {
