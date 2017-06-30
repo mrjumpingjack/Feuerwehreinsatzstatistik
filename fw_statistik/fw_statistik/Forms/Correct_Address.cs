@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace fw_statistik.Forms
 {
-    public partial class Form2 : Form
+    public partial class Correct_Address : Form
     {
-        public Form2()
+        public Correct_Address()
         {
             InitializeComponent();
         }

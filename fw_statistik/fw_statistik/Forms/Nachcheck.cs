@@ -19,69 +19,23 @@ namespace fw_statistik
             InitializeComponent();
         }
 
-        private void label3_Click(object sender, EventArgs e)
-        {
+        public Einsatz Einsatz { get; set; }
 
-        }
+        public bool Changed { get; set; }
+
 
         private void button2_Click(object sender, EventArgs e)
         {
-            changed = false;
+            Changed = false;
             Close();
         }
-
-        private Einsatz einsatz;
-        public Einsatz Einsatz
-        {
-            get
-            {
-                return einsatz;
-            }
-            set
-            {
-                einsatz = value;
-            }
-        }
-
-
-
-  
-
-
-
-        //private string addresse; 
-        //public string Adresse        
-        //{
-        //    get
-        //    {
-        //        return addresse;
-        //    }
-        //    set
-        //    {
-        //        addresse = value;
-        //    }
-        //}
-
-        private bool changed;
-        public bool Changed
-        {
-            get
-            {
-                return changed;
-            }
-            set
-            {
-                changed = value;
-            }
-        }
-
 
 
         private void Nachcheck_Load(object sender, EventArgs e)
         {
             try
             {
-                tbOrt.Text = einsatz.Adresse.LocalityName;
+                tbOrt.Text = Einsatz.Adresse.LocalityName;
             }
             catch
             {
@@ -89,7 +43,7 @@ namespace fw_statistik
             }
             try
             {
-                tbStraße.Text = einsatz.Adresse.ThoroughfareName;
+                tbStraße.Text = Einsatz.Adresse.ThoroughfareName;
             }
             catch
             {
@@ -97,7 +51,7 @@ namespace fw_statistik
             }
             try
             {
-                tbHausnummer.Text = einsatz.Adresse.HouseNo;
+                tbHausnummer.Text = Einsatz.Adresse.HouseNo;
             }
             catch
             {
@@ -106,7 +60,7 @@ namespace fw_statistik
 
             try
             {
-                tb_alarmzeit.Text = einsatz.Alarm_datum.ToString();
+                tb_alarmzeit.Text = Einsatz.Alarm_datum.ToString();
             }
             catch
             {
@@ -114,7 +68,7 @@ namespace fw_statistik
             }
             try
             {
-                tb_einsatzende.Text = einsatz.End_datum.ToString();
+                tb_einsatzende.Text = Einsatz.End_datum.ToString();
             }
             catch
             {
@@ -132,7 +86,7 @@ namespace fw_statistik
             Einsatz.Adresse= getname_bypoint(getpoint_byname(tbStraße.Text + " " + tbHausnummer.Text + "," + tbOrt.Text));
             Einsatz.End_datum = DateTime.Parse(tb_einsatzende.Text);
             Einsatz.Alarm_datum = DateTime.Parse(tb_alarmzeit.Text);
-            changed = true;
+            Changed = true;
             Close();
         }
 

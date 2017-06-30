@@ -1,4 +1,5 @@
-﻿using System;
+﻿using fw_statistik;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -126,7 +127,7 @@ namespace Einsatz_scraper
         {
             using (StreamReader sr = new StreamReader("Fahrzeugnamen.txt"))
             {
-               while(sr.Peek()>=0)
+                while (sr.Peek() >= 0)
                 {
                     fahrzeugnamen.Add(sr.ReadLine());
                 }

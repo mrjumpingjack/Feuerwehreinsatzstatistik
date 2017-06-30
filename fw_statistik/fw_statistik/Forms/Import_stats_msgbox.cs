@@ -17,37 +17,15 @@ namespace fw_statistik
             InitializeComponent();
         }
 
-        private string message;
-        public string Message
-        {
-            get
-            {
-                return message;
-            }
-            set
-            {
-                message = value;
-            }
-        }
+        public string Message { get; set; }
 
-        private string result;
-        public string Result
-        {
-            get
-            {
-                return result;
-            }
-            set
-            {
-                result = value;
-            }
-        }
+        public string Result { get; set; }
 
 
         private void Import_stats_msgbox_Load(object sender, EventArgs e)
         {
             panel1.BackgroundImage = SystemIcons.Asterisk.ToBitmap();
-            textBox1.Text = message;
+            textBox1.Text = Message;
         }
 
         private void button1_Click(object sender, EventArgs e)

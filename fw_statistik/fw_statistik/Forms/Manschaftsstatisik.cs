@@ -16,40 +16,50 @@ namespace fw_statistik
 {
     public partial class Manschaftsstatisik : Form
     {
-        List<Einsatz> einsätze = new List<Einsatz>();
-        List<Alias> aliase = new List<Alias>();
+        public List<Einsatz> Einsätze { get; set; }
+        public List<Alias> Aliase { get; set; }
 
-        public Manschaftsstatisik(List<Einsatz> einsätze_)
+    
+
+        public Manschaftsstatisik()
         {
-            einsätze = einsätze_;
             InitializeComponent();
         }
 
 
         private void find_aliase()
         {
-            bool alias_exists = false;
-            bool fwm_is_name = false;
-
-            string xml_alias_filename = "aliase.xml";
-
-            XmlDocument load_xml_doc = new XmlDocument();
-            if (File.Exists(xml_alias_filename))
+            try
             {
-                load_xml_doc.Load(xml_alias_filename);
+                bool aliasExists = false;
+                bool nameIsInAlias = false;
 
-                foreach (XmlNode node in load_xml_doc.DocumentElement)
+                string xml_alias_filename = "aliase.xml";
+
+                XmlDocument load_xml_doc = new XmlDocument();
+                if (File.Exists(xml_alias_filename))
                 {
+                    load_xml_doc.Load(xml_alias_filename);
 
-                    Alias newalias = new Alias(node.Name.Replace("_", ", "), node.InnerText.Split(';').ToList<String>());
-                    aliase.Add(newalias);
+                    foreach (XmlNode node in load_xml_doc.DocumentElement)
+                    {
+                        try
+                        {
+                            Alias newalias = new Alias(node.Name.Replace("_", ", "), node.InnerText.Split(';').ToList<String>());
+                            Aliase.Add(newalias);
+                        }
+                        catch(Exception ex)
+                        {
+
+                        }
+                    }
+
                 }
-
-            }
+            
             string dialogresult = "Yes";
 
 
-            foreach (Einsatz einsatz in einsätze)
+            foreach (Einsatz einsatz in Einsätze)
             {
                 foreach (Fahrzeug fahrzeug in einsatz.Fahrzeuge)
                 {
@@ -57,25 +67,25 @@ namespace fw_statistik
             
                     foreach (Feuerwehrmann FWM in fahrzeug.Besatzung)
                     {
-                        alias_exists = false;
-                        fwm_is_name = false;
+                        aliasExists = false;
+                        nameIsInAlias = false;
 
-                        foreach (Alias alias_ in aliase)
+                        foreach (Alias alias in Aliase)
                         {
-                            if (alias_.Name == FWM.Name)
+                            if (alias.Name == FWM.Name)
                             {
-                                fwm_is_name = true;
+                                nameIsInAlias = true;
                             }
                             else
                             {
-                                if (alias_.Aliase.Contains(FWM.Name))
+                                if (alias.Aliase.Contains(FWM.Name))
                                 {
-                                    alias_exists = true;
+                                    aliasExists = true;
                                 }
                             }
                         }
 
-                        if (fwm_is_name == false && alias_exists == false)
+                        if (nameIsInAlias == false && aliasExists == false)
                         {
                             if (dialogresult == "Yes" || dialogresult == "No")
                             {
@@ -87,22 +97,22 @@ namespace fw_statistik
 
                                 if (dialogresult == "Yes")
                                 {
-                                    Alias_Editor ae = new Alias_Editor(aliase, FWM.Name);
+                                    Alias_Editor ae = new Alias_Editor(Aliase, FWM.Name);
                                     ism.Message = "Wollen Sie für " + FWM.Name + " einen Alias erstellen?";
                                     ae.ShowDialog();
                                    
-                                    aliase = ae.aliase;
-                                    ae.Dispose();
+                                    Aliase = ae.aliase;
+                                 
                                 }
 
                             }
                             else if (dialogresult == "AllYes")
                             {
-                                Alias_Editor ae = new Alias_Editor(aliase, FWM.Name);
+                                Alias_Editor ae = new Alias_Editor(Aliase, FWM.Name);
                                 ae.ShowDialog();
                               
-                                aliase = ae.aliase;
-                                ae.Dispose();
+                                Aliase = ae.aliase;
+                               
                             }
 
                         }
@@ -117,7 +127,7 @@ namespace fw_statistik
                     XmlNode rootNode = xml_doc.CreateElement("Aliase");
                     xml_doc.AppendChild(rootNode);
 
-                    foreach (Alias alias in aliase)
+                    foreach (Alias alias in Aliase)
                     {
                         string aan = alias.Name.Replace(",", "_").Replace(" ", "");
                         XmlNode userNode = xml_doc.CreateElement(aan);
@@ -138,20 +148,27 @@ namespace fw_statistik
                 }
                 catch (Exception ex)
                 {
-
+                    Console.WriteLine(ex);
                 }
 
             }
+            }
+            catch (Exception ex)
+            {
 
+            }
         }
         Dictionary<string, int> name_anwesenheit = new Dictionary<string, int>();
 
 
         private void Manschaftsstatisik_Load(object sender, EventArgs e)
         {
+            Aliase = new List<Alias>();
             find_aliase();
-            
-            fill_listbox();
+
+           
+
+            loadEinsätzeToListBox();
             page1();
             page2();
             page3();
@@ -160,28 +177,28 @@ namespace fw_statistik
 
 
 
-        private void fill_listbox()
+        private void loadEinsätzeToListBox()
         {
             //füllen der listbox
             try
             {
-                foreach (Einsatz einsatz in einsätze)
+                foreach (Einsatz einsatz in Einsätze)
                 {
                     foreach (Fahrzeug fahrzeug in einsatz.Fahrzeuge)
                     {
                         foreach (Feuerwehrmann FWM in fahrzeug.Besatzung)
                         {
-                            foreach (Alias a in aliase)
+                            foreach (Alias alias in Aliase)
                             {
-                                if (a.Aliase.Contains(FWM.Name))
+                                if (alias.Aliase.Contains(FWM.Name))
                                 {
-                                    if (name_anwesenheit.Keys.Contains(a.Name))
+                                    if (name_anwesenheit.Keys.Contains(alias.Name))
                                     {
-                                        name_anwesenheit[a.Name]++;
+                                        name_anwesenheit[alias.Name]++;
                                     }
                                     else
                                     {
-                                        name_anwesenheit.Add(a.Name, 1);
+                                        name_anwesenheit.Add(alias.Name, 1);
                                     }
                                 }
                             }
@@ -201,7 +218,7 @@ namespace fw_statistik
             }
             catch (Exception ex)
             {
-
+                Console.WriteLine(ex);
             }
         }
         
@@ -225,13 +242,13 @@ namespace fw_statistik
         {
             //page 2
 
-            int x_chart_point = 0;
-            int y_chart_point = 0;
+            int xChartPoint = 0;
+            int yChartPoint = 0;
 
             Dictionary<string, Dictionary<string, int>> zuordnung = new Dictionary<string, Dictionary<string, int>>();
 
 
-            foreach (Einsatz einsatz in einsätze)
+            foreach (Einsatz einsatz in Einsätze)
             {
                 foreach (Fahrzeug fahrzeug in einsatz.Fahrzeuge)
                 {
@@ -242,7 +259,7 @@ namespace fw_statistik
                         Chart chart = new Chart();
                         chart.Name = fahrzeug.Name;
                         chart.Size = new Size(tabPage2.Width, 660);
-                        chart.Location = new Point(x_chart_point, y_chart_point);
+                        chart.Location = new Point(xChartPoint, yChartPoint);
                         chart.ChartAreas.Add(fahrzeug.Name);
                         chart.Series.Add(fahrzeug.Name);
 
@@ -251,7 +268,7 @@ namespace fw_statistik
                         chart.Titles.Add(fahrzeug.Name);
                         chart.Titles[0].Text = fahrzeug.Name;
 
-                        y_chart_point += chart.Height;
+                        yChartPoint += chart.Height;
 
                         tabPage2.Controls.Add(chart);
                     }
@@ -262,9 +279,9 @@ namespace fw_statistik
 
                     foreach (Feuerwehrmann man in fahrzeug.Besatzung)
                     {
-                        foreach (Alias a in aliase)
+                        foreach (Alias alias in Aliase)
                         {
-                            if (a.Aliase.Contains(man.Name))
+                            if (alias.Aliase.Contains(man.Name))
                             {
 
 
@@ -272,19 +289,19 @@ namespace fw_statistik
                                 {
                                     int anzahl = 0;
 
-                                    if (zuordnung[fahrzeug.Name].TryGetValue(a.Name, out anzahl))
+                                    if (zuordnung[fahrzeug.Name].TryGetValue(alias.Name, out anzahl))
                                     {
-                                        zuordnung[fahrzeug.Name][a.Name]++;
+                                        zuordnung[fahrzeug.Name][alias.Name]++;
                                     }
                                     else
                                     {
-                                        zuordnung[fahrzeug.Name].Add(a.Name, 1);
+                                        zuordnung[fahrzeug.Name].Add(alias.Name, 1);
                                     }
                                 }
                                 else
                                 {
                                     Dictionary<string, int> personal = new Dictionary<string, int>();
-                                    personal.Add(a.Name, 1);
+                                    personal.Add(alias.Name, 1);
                                     zuordnung.Add(fahrzeug.Name, personal);
                                 }
                             }
@@ -320,7 +337,7 @@ namespace fw_statistik
             }
             catch (Exception ex)
             {
-
+                Console.WriteLine(ex);
             }
         }
 
@@ -329,7 +346,7 @@ namespace fw_statistik
             try
             {
                 Dictionary<string, Dictionary<String, int>> es_grp_anz = new Dictionary<string, Dictionary<string, int>>();
-                foreach (Einsatz e in einsätze)
+                foreach (Einsatz e in Einsätze)
                 {
 
                     string stichwort = e.Einsatzstichwort.ToUpper().Replace("-", "").Replace(" ", "");
@@ -370,21 +387,6 @@ namespace fw_statistik
                         es_grp_anz.Add(stichwort, grp_anz);
                     }
 
-
-
-
-                    // chart2.Series[0].Points.AddXY(i, beteiligung);
-
-
-
-                    //int i = 0;
-                    //int beteiligung = 0;
-                    //foreach (Fahrzeug f in e.Fahrzeuge)
-                    //{
-                    //    beteiligung += f.Besatzung.Count;
-                    //}
-                    //chart2.Series[0].Points.AddXY(i, beteiligung);
-                    //i++;
                 }
                 int x_chart_point = 0;
                 int y_chart_point = 0;
@@ -409,7 +411,7 @@ namespace fw_statistik
 
                     if (!tabPage3.Controls.Contains(chart_))
                     {
-                        
+
                         chart.Name = es_grp_anz_.Key;
                         chart.Size = new Size(tabPage2.Width, 660);
                         chart.Location = new Point(x_chart_point, y_chart_point);
@@ -424,7 +426,7 @@ namespace fw_statistik
                         y_chart_point += chart.Height;
 
                         tabPage3.Controls.Add(chart);
-                        
+
                         foreach (KeyValuePair<string, int> grp_anz in dic)
                         {
 
@@ -443,22 +445,7 @@ namespace fw_statistik
 
                         chart.Series[es_grp_anz_.Key].Sort(PointSortOrder.Ascending, "X");
                     }
-
-                    
-
-                    
-
-                    //}
-                    //else
-                    //{
-
-                    //}
-
-                    // chart2.Series[es_grp_anz_.Key].Points.AddXY(es_grp_anz_.Value.Keys, es_grp_anz_.Value.Values);
-                }
-                
-
-
+                }        
             }
             catch(Exception ex)
             {
@@ -466,15 +453,7 @@ namespace fw_statistik
             }
 
         }
-
-
-
-
-
         
-      
-       
-
         private void teilgenommenToolStripMenuItem_Click(object sender, EventArgs e)
         {
            

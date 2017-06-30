@@ -15,44 +15,34 @@ namespace fw_statistik
         public Alarmzeit_Editor()
         {
             InitializeComponent();
+
         }
 
-        private string alarmzeit;
-        public string Alarmzeit
-        {
-            get
-            {
-                return alarmzeit;
-            }
-            set
-            {
-                alarmzeit = value;
-            }
-        }
 
-        private string einsatzende;
-        public string Einsatzende
-        {
-            get
-            {
-                return einsatzende;
-            }
-            set
-            {
-                einsatzende = value;
-            }
-        }
+        public string Alarmzeit { get; set; }
+
+        public string Einsatzende { get; set; }
+
+
 
 
 
         private void button1_Click(object sender, EventArgs e)
         {
+
+            SetTimes();
+
+
+        }
+
+        private void SetTimes()
+        {
             DateTime dateValue = default(DateTime);
 
-            if (DateTime.TryParse(textBox1.Text, out dateValue)&& DateTime.TryParse(textBox2.Text, out dateValue))
+            if (DateTime.TryParse(tb_alarmzeit.Text, out dateValue) && DateTime.TryParse(tb_einsatzende.Text, out dateValue))
             {
-                alarmzeit = textBox1.Text;
-                einsatzende = textBox2.Text;
+                Alarmzeit = tb_alarmzeit.Text;
+                Einsatzende = tb_einsatzende.Text;
                 Close();
             }
             else
@@ -60,16 +50,13 @@ namespace fw_statistik
                 MessageBox.Show("Die eingegebenen Werte sind nicht im gültigen Datumsformat (dd.MM.yyyy hh:mm");
 
             }
-              
-
-              
         }
 
         private void Alarmzeit_Editor_Load(object sender, EventArgs e)
         {
-            textBox1.Text = alarmzeit;
-            textBox2.Text = einsatzende;
-            
+            tb_alarmzeit.Text = Alarmzeit;
+            tb_einsatzende.Text = Einsatzende;
+
         }
     }
 }

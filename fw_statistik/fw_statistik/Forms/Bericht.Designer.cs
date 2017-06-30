@@ -120,7 +120,7 @@
             this.tb_adresse.ReadOnly = true;
             this.tb_adresse.Size = new System.Drawing.Size(317, 13);
             this.tb_adresse.TabIndex = 12;
-            this.tb_adresse.DoubleClick += new System.EventHandler(this.tb_ort_DoubleClick);
+
             // 
             // tb_stichwort
             // 
@@ -139,8 +139,7 @@
             this.tb_mzeit.ReadOnly = true;
             this.tb_mzeit.Size = new System.Drawing.Size(317, 13);
             this.tb_mzeit.TabIndex = 14;
-            this.tb_mzeit.TextChanged += new System.EventHandler(this.tb_mzeit_TextChanged);
-            this.tb_mzeit.DoubleClick += new System.EventHandler(this.tb_mzeit_DoubleClick);
+
             // 
             // tb_meldung
             // 
@@ -150,7 +149,7 @@
             this.tb_meldung.ReadOnly = true;
             this.tb_meldung.Size = new System.Drawing.Size(317, 13);
             this.tb_meldung.TabIndex = 15;
-            this.tb_meldung.TextChanged += new System.EventHandler(this.tb_meldung_TextChanged);
+
             // 
             // tb_ende
             // 
@@ -160,7 +159,7 @@
             this.tb_ende.ReadOnly = true;
             this.tb_ende.Size = new System.Drawing.Size(317, 13);
             this.tb_ende.TabIndex = 16;
-            this.tb_ende.DoubleClick += new System.EventHandler(this.tb_ende_DoubleClick);
+
             // 
             // tb_distanz
             // 

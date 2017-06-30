@@ -30,8 +30,8 @@ namespace fw_statistik
         /// </summary>
         private void InitializeComponent()
         {
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.ofd_main = new System.Windows.Forms.OpenFileDialog();
+            this.ms_main = new System.Windows.Forms.MenuStrip();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.addEinsatzToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -45,7 +45,7 @@ namespace fw_statistik
             this.technischeHilfeleistungToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.übungenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.alleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripComboBox1 = new System.Windows.Forms.ToolStripComboBox();
+            this.tsCBEinsätze = new System.Windows.Forms.ToolStripComboBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
@@ -62,32 +62,31 @@ namespace fw_statistik
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
+            this.sstrip_main = new System.Windows.Forms.StatusStrip();
+            this.tsPbImportFortschritt = new System.Windows.Forms.ToolStripProgressBar();
             this.MainMap = new GMap.NET.WindowsForms.GMapControl();
-            this.menuStrip1.SuspendLayout();
+            this.ms_main.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
-            this.statusStrip1.SuspendLayout();
+            this.sstrip_main.SuspendLayout();
             this.SuspendLayout();
             // 
-            // openFileDialog1
+            // ofd_main
             // 
-            this.openFileDialog1.FileName = "openFileDialog1";
-            this.openFileDialog1.Multiselect = true;
+            this.ofd_main.Multiselect = true;
             // 
-            // menuStrip1
+            // ms_main
             // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ms_main.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openToolStripMenuItem,
             this.loadStatsToolStripMenuItem,
             this.ansichtToolStripMenuItem,
-            this.toolStripComboBox1});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1084, 27);
-            this.menuStrip1.TabIndex = 2;
-            this.menuStrip1.Text = "menuStrip1";
+            this.tsCBEinsätze});
+            this.ms_main.Location = new System.Drawing.Point(0, 0);
+            this.ms_main.Name = "ms_main";
+            this.ms_main.Size = new System.Drawing.Size(1084, 27);
+            this.ms_main.TabIndex = 2;
+            this.ms_main.Text = "menuStrip1";
             // 
             // openToolStripMenuItem
             // 
@@ -200,13 +199,12 @@ namespace fw_statistik
             this.alleToolStripMenuItem.Text = "Alle";
             this.alleToolStripMenuItem.Click += new System.EventHandler(this.layer_CheckedChanged);
             // 
-            // toolStripComboBox1
+            // tsCBEinsätze
             // 
-            this.toolStripComboBox1.Name = "toolStripComboBox1";
-            this.toolStripComboBox1.Size = new System.Drawing.Size(300, 23);
-            this.toolStripComboBox1.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBox1_SelectedIndexChanged);
-            this.toolStripComboBox1.Click += new System.EventHandler(this.toolStripComboBox1_Click);
-            this.toolStripComboBox1.TextChanged += new System.EventHandler(this.toolStripComboBox1_TextChanged);
+            this.tsCBEinsätze.Name = "tsCBEinsätze";
+            this.tsCBEinsätze.Size = new System.Drawing.Size(300, 23);
+            this.tsCBEinsätze.Click += new System.EventHandler(this.toolStripComboBox1_Click);
+            this.tsCBEinsätze.TextChanged += new System.EventHandler(this.toolStripComboBox1_TextChanged);
             // 
             // panel1
             // 
@@ -380,20 +378,20 @@ namespace fw_statistik
             this.label2.TabIndex = 7;
             this.label2.Text = "Einsätze:";
             // 
-            // statusStrip1
+            // sstrip_main
             // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripProgressBar1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 740);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1084, 22);
-            this.statusStrip1.TabIndex = 8;
-            this.statusStrip1.Text = "statusStrip1";
+            this.sstrip_main.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsPbImportFortschritt});
+            this.sstrip_main.Location = new System.Drawing.Point(0, 740);
+            this.sstrip_main.Name = "sstrip_main";
+            this.sstrip_main.Size = new System.Drawing.Size(1084, 22);
+            this.sstrip_main.TabIndex = 8;
+            this.sstrip_main.Text = "statusStrip1";
             // 
-            // toolStripProgressBar1
+            // tsPbImportFortschritt
             // 
-            this.toolStripProgressBar1.Name = "toolStripProgressBar1";
-            this.toolStripProgressBar1.Size = new System.Drawing.Size(100, 16);
+            this.tsPbImportFortschritt.Name = "tsPbImportFortschritt";
+            this.tsPbImportFortschritt.Size = new System.Drawing.Size(100, 16);
             // 
             // MainMap
             // 
@@ -424,32 +422,31 @@ namespace fw_statistik
             this.MainMap.TabIndex = 9;
             this.MainMap.Zoom = 0D;
             this.MainMap.OnMarkerClick += new GMap.NET.WindowsForms.MarkerClick(this.MainMap_OnMarkerClick_1);
-            this.MainMap.OnMapDrag += new GMap.NET.MapDrag(this.MainMap_OnMapDrag);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1084, 762);
-            this.Controls.Add(this.statusStrip1);
+            this.Controls.Add(this.sstrip_main);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this.ms_main);
             this.Controls.Add(this.MainMap);
-            this.MainMenuStrip = this.menuStrip1;
+            this.MainMenuStrip = this.ms_main;
             this.MinimumSize = new System.Drawing.Size(1100, 800);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Einsatzstatistik";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.Shown += new System.EventHandler(this.Form1_Shown);
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
+            this.ms_main.ResumeLayout(false);
+            this.ms_main.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
+            this.sstrip_main.ResumeLayout(false);
+            this.sstrip_main.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -458,8 +455,8 @@ namespace fw_statistik
       
 
         #endregion
-        private System.Windows.Forms.OpenFileDialog openFileDialog1;
-        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.OpenFileDialog ofd_main;
+        private System.Windows.Forms.MenuStrip ms_main;
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem loadStatsToolStripMenuItem;
@@ -486,9 +483,9 @@ namespace fw_statistik
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label l_load_error;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
-        private System.Windows.Forms.ToolStripComboBox toolStripComboBox1;
+        private System.Windows.Forms.StatusStrip sstrip_main;
+        private System.Windows.Forms.ToolStripProgressBar tsPbImportFortschritt;
+        private System.Windows.Forms.ToolStripComboBox tsCBEinsätze;
         private GMap.NET.WindowsForms.GMapControl MainMap;
         private System.Windows.Forms.ToolStripMenuItem addEinsatzToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;

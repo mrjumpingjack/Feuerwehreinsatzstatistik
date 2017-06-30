@@ -18,59 +18,36 @@ namespace fw_statistik
         }
 
 
-        private Einsatz einsatz;
-        public Einsatz Einsatz
-        {
-            get
-            {
-                return einsatz;
-            }
-            set
-            {
-                einsatz = value;
-            }
-        }
-
-        private string result;
-        public string Result
-        {
-            get
-            {
-                return result;
-            }
-            set
-            {
-                result = value;
-            }
-        }
+        public Einsatz Einsatz { get; set; }
+        public string Result { get; set; }
 
         private void Import_file_msgbox_Load(object sender, EventArgs e)
         {
-           textBox1.Text= einsatz.Adresse.Address + " konnte nicht gefunden werden. Wollen Sie jetzt per Hand danach suchen?";
+           textBox1.Text=Einsatz.Adresse.Address + " konnte nicht gefunden werden. Wollen Sie jetzt per Hand danach suchen?";
             panel1.BackgroundImage = SystemIcons.Question.ToBitmap();
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            result = "YesAll";
+            Result = "YesAll";
             Close();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            result = "Yes";
+            Result = "Yes";
             Close();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            result = "No";
+            Result = "No";
             Close();
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            result = "NoAll";
+            Result = "NoAll";
             Close();
         }
     }

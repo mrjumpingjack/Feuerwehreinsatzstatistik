@@ -76,11 +76,11 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Forms\Form2.cs">
+    <Compile Include="Forms\Correct_Address.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Form2.Designer.cs">
-      <DependentUpon>Form2.cs</DependentUpon>
+    <Compile Include="Forms\Correct_Address.Designer.cs">
+      <DependentUpon>Correct_Address.cs</DependentUpon>
     </Compile>
     <Compile Include="Klassen\Alias.cs" />
     <Compile Include="Klassen\Einsatz.cs" />
@@ -104,11 +104,11 @@
       <DependentUpon>Einsatzstatisitk.cs</DependentUpon>
     </Compile>
     <Compile Include="Klassen\Feuerwehrmann.cs" />
-    <Compile Include="Forms\Form1.cs">
+    <Compile Include="Forms\Main.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Forms\Main.Designer.cs">
+      <DependentUpon>Main.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Bericht.cs">
       <SubType>Form</SubType>
@@ -158,14 +158,14 @@
     <EmbeddedResource Include="Forms\Einsatzstatisitk.resx">
       <DependentUpon>Einsatzstatisitk.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Main.resx">
+      <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Bericht.resx">
       <DependentUpon>Bericht.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Form2.resx">
-      <DependentUpon>Form2.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Correct_Address.resx">
+      <DependentUpon>Correct_Address.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Import_file_msgbox.resx">
       <DependentUpon>Import_file_msgbox.cs</DependentUpon>

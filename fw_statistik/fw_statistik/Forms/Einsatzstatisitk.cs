@@ -24,6 +24,10 @@ namespace fw_statistik
 
         private void charts_Load(object sender, EventArgs e)
         {
+            charting1_gesammt(einsätze, chart1);
+            charting1_nach_jahren_stichwort(einsätze, chart2);
+            charting_nach_Monaten_stichwort(einsätze, chart3);
+            charting_nach_tageszeit_stichwort(einsätze, chart4);
 
         }
 
@@ -169,18 +173,9 @@ namespace fw_statistik
 
             chart.Invalidate();
             chart.Update();
-
-
-
-
-
-
+            
         }
-
-
-
-
-
+        
         public void charting_nach_Monaten_stichwort(List<Einsatz> einsätze, Chart chart)
         {
             chart.Series.Clear();
